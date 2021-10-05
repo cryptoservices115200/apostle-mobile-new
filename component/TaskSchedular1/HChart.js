@@ -4,67 +4,67 @@ import DraggableFlatList from "react-native-draggable-flatlist";
 
 let data = 
 [{
-  width1: 650,
-  width2: 600,
+  width1: 200,
+  width2: 200,
   color1: 'rgba(0, 255, 255, 0.5)',
   color2: 'rgba(0, 255, 255, 1)',
   marginLeft1: 0,
   marginLeft2: 0,
 },
 {
-  width1: 200,
-  width2: 200,
+  width1: 70,
+  width2: 70,
   color1: 'rgba(0, 132, 250, 0.5)',
   color2: 'rgba(0, 132, 250, 1)',
   marginLeft1: 0,
   marginLeft2: 0,
 },
 {
-  width1: 200,
-  width2: 200,
+  width1: 70,
+  width2: 70,
   color1: 'rgba(0, 132, 250, 0.5)',
   color2: 'rgba(0, 132, 250, 1)',
-  marginLeft1: 200,
+  marginLeft1: 70,
   marginLeft2: 0,
 },
 {
-  width1: 300,
-  width2: 200,
+  width1: 75,
+  width2: 60,
   color1: 'rgba(0, 132, 250, 0.5)',
   color2: 'rgba(0, 132, 250, 1)',
-  marginLeft1: 400,
-  marginLeft2: 40,
-},
-{
-  width1: 300,
-  width2: 300,
-  color1: 'rgba(12, 9, 249, 0.5)',
-  color2: 'rgba(12, 9, 249, 1)',
-  marginLeft1: 650,
-  marginLeft2: 0,
-},
-{
-  width1: 100,
-  width2: 100,
-  color1: 'rgba(12, 9, 249, 0.5)',
-  color2: 'rgba(12, 9, 249, 1)',
-  marginLeft1: 700,
-  marginLeft2: 0,
-},
-{
-  width1: 200,
-  width2: 200,
-  color1: 'rgba(12, 9, 249, 0.5)',
-  color2: 'rgba(12, 9, 249, 1)',
-  marginLeft1: 760,
-  marginLeft2: 0,
+  marginLeft1: 140,
+  marginLeft2: 10,
 },
 {
   width1: 140,
   width2: 140,
   color1: 'rgba(12, 9, 249, 0.5)',
   color2: 'rgba(12, 9, 249, 1)',
-  marginLeft1: 860,
+  marginLeft1: 200,
+  marginLeft2: 0,
+},
+{
+  width1: 60,
+  width2: 60,
+  color1: 'rgba(12, 9, 249, 0.5)',
+  color2: 'rgba(12, 9, 249, 1)',
+  marginLeft1: 200,
+  marginLeft2: 0,
+},
+{
+  width1: 55,
+  width2: 50,
+  color1: 'rgba(12, 9, 249, 0.5)',
+  color2: 'rgba(12, 9, 249, 1)',
+  marginLeft1: 260,
+  marginLeft2: 5,
+},
+{
+  width1: 40,
+  width2: 40,
+  color1: 'rgba(12, 9, 249, 0.5)',
+  color2: 'rgba(12, 9, 249, 1)',
+  marginLeft1: 315,
   marginLeft2: 0,
 },]
 
@@ -79,7 +79,7 @@ const exampleData = [...data].map((d, index) => ({
   marginLeft2: d.marginLeft2,
 }));
 
-class Example extends Component {
+class HChart extends Component {
   state = {
     data: exampleData
   };
@@ -87,30 +87,33 @@ class Example extends Component {
   renderItem = ({ item, index, drag, isActive }) => {
     
     return (
-      <TouchableOpacity
-        onLongPress={drag}
-      >
-        <View
-          style={{
-            height: 14,
-            marginTop: 2,
-            marginRight: 2,
-            marginBottom: 2,
-            marginLeft: item.marginLeft1,
-            width: item.width1,
-            backgroundColor: isActive ? "blue" : item.backgroundColor1,
-            borderRadius: 1000,
-          }}
+      <View style={{
+        marginLeft: item.marginLeft1,
+        width: item.width1,
+      }}>
+        <TouchableOpacity
+          onLongPress={drag}
         >
-          <View style={{
-            height: 14,
-            width: item.width2, 
-            marginLeft: item.marginLeft2,
-            backgroundColor: isActive ? "blue" : item.backgroundColor2,
-            borderRadius: 1000,
-          }}></View>
-        </View>
-      </TouchableOpacity>
+          <View
+            style={{
+              height: 14,
+              marginTop: 2,
+              marginRight: 2,
+              marginBottom: 2,
+              backgroundColor: isActive ? "blue" : item.backgroundColor1,
+              borderRadius: 1000,
+            }}
+          >
+            <View style={{
+              height: 14,
+              width: item.width2, 
+              marginLeft: item.marginLeft2,
+              backgroundColor: isActive ? "blue" : item.backgroundColor2,
+              borderRadius: 1000,
+            }}></View>
+          </View>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -118,14 +121,15 @@ class Example extends Component {
     return (
       <View style={{ flex: 1 }}>
         <DraggableFlatList
+          horizontal={true}
           data={this.state.data}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => `draggable-item-${item.key}`}
-          onDragEnd={({ data }) => this.setState({ data })}
+          onDragEnd={({ data }) => { this.setState({ data }) }}
         />
       </View>
     );
   }
 }
 
-export default Example;
+export default HChart;

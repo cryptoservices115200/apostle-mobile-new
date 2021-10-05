@@ -1,7 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Animated } from 'react-native';
 
-import HChart from './HChart';
+// import Draggable from 'react-native-draggable';
+
+// import HChart from './HChart';
+
+import GridView from './GridView';
+
 
 const fontSizeLg = 12;
 const fontSizeMd = 9;
@@ -84,6 +89,192 @@ const styles = StyleSheet.create({
         color: 'gray',
     }
 })
+
+// let data = 
+// [{
+//   width1: 200,
+//   width2: 200,
+//   color1: 'rgba(0, 255, 255, 0.5)',
+//   color2: 'rgba(0, 255, 255, 1)',
+//   marginLeft1: 0,
+//   marginLeft2: 0,
+// },
+// {
+//   width1: 70,
+//   width2: 70,
+//   color1: 'rgba(0, 132, 250, 0.5)',
+//   color2: 'rgba(0, 132, 250, 1)',
+//   marginLeft1: 0,
+//   marginLeft2: 0,
+// },
+// {
+//   width1: 70,
+//   width2: 70,
+//   color1: 'rgba(0, 132, 250, 0.5)',
+//   color2: 'rgba(0, 132, 250, 1)',
+//   marginLeft1: 70,
+//   marginLeft2: 0,
+// },
+// {
+//   width1: 75,
+//   width2: 60,
+//   color1: 'rgba(0, 132, 250, 0.5)',
+//   color2: 'rgba(0, 132, 250, 1)',
+//   marginLeft1: 140,
+//   marginLeft2: 10,
+// },
+// {
+//   width1: 140,
+//   width2: 140,
+//   color1: 'rgba(12, 9, 249, 0.5)',
+//   color2: 'rgba(12, 9, 249, 1)',
+//   marginLeft1: 200,
+//   marginLeft2: 0,
+// },
+// {
+//   width1: 60,
+//   width2: 60,
+//   color1: 'rgba(12, 9, 249, 0.5)',
+//   color2: 'rgba(12, 9, 249, 1)',
+//   marginLeft1: 200,
+//   marginLeft2: 0,
+// },
+// {
+//   width1: 55,
+//   width2: 50,
+//   color1: 'rgba(12, 9, 249, 0.5)',
+//   color2: 'rgba(12, 9, 249, 1)',
+//   marginLeft1: 260,
+//   marginLeft2: 5,
+// },
+// {
+//   width1: 40,
+//   width2: 40,
+//   color1: 'rgba(12, 9, 249, 0.5)',
+//   color2: 'rgba(12, 9, 249, 1)',
+//   marginLeft1: 315,
+//   marginLeft2: 0,
+// },]
+let data = 
+[{
+  width1: 200,
+  width2: 200,
+  color1: 'rgba(0, 255, 255, 0.5)',
+  color2: 'rgba(0, 255, 255, 1)',
+  marginLeft1: 0,
+  marginLeft2: 0,
+},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{
+  width1: 70,
+  width2: 70,
+  color1: 'rgba(0, 132, 250, 0.5)',
+  color2: 'rgba(0, 132, 250, 1)',
+  marginLeft1: 0,
+  marginLeft2: 0,
+},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{
+  width1: 70,
+  width2: 70,
+  color1: 'rgba(0, 132, 250, 0.5)',
+  color2: 'rgba(0, 132, 250, 1)',
+  marginLeft1: 70,
+  marginLeft2: 0,
+},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{
+  width1: 75,
+  width2: 60,
+  color1: 'rgba(0, 132, 250, 0.5)',
+  color2: 'rgba(0, 132, 250, 1)',
+  marginLeft1: 140,
+  marginLeft2: 10,
+},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{
+  width1: 140,
+  width2: 140,
+  color1: 'rgba(12, 9, 249, 0.5)',
+  color2: 'rgba(12, 9, 249, 1)',
+  marginLeft1: 200,
+  marginLeft2: 0,
+},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{},
+{
+  width1: 60,
+  width2: 60,
+  color1: 'rgba(12, 9, 249, 0.5)',
+  color2: 'rgba(12, 9, 249, 1)',
+  marginLeft1: 200,
+  marginLeft2: 0,
+},
+{},
+{},
+{},
+{},
+{},
+{},
+{
+  width1: 55,
+  width2: 50,
+  color1: 'rgba(12, 9, 249, 0.5)',
+  color2: 'rgba(12, 9, 249, 1)',
+  marginLeft1: 260,
+  marginLeft2: 5,
+},
+{
+  width1: 40,
+  width2: 40,
+  color1: 'rgba(12, 9, 249, 0.5)',
+  color2: 'rgba(12, 9, 249, 1)',
+  marginLeft1: 315,
+  marginLeft2: 0,
+},]
+
 
 export default class TaskSchedular extends React.Component {
     constructor(props) {
@@ -338,8 +529,18 @@ export default class TaskSchedular extends React.Component {
                             </View>
                         </View>
                     </View>
-                    <View style={{width: width - step1}}>
-                        <HChart />
+                    <View style={{width: width - step1, flex: 1}}>
+                        {/* <View style={{ position: 'absolute', top: 100, left: 100 }}>
+                            <Animated.View style={{width: 50, height: 50, borderColor: 'black', borderStyle: 'solid', borderWidth: '1'}}>
+                                <Text style={{fontSize: 12}}>Drag me!</Text>
+                            </Animated.View>
+                        </View> */}
+                        {/* <HChart></HChart> */}
+                        <GridView 
+                            data={data}
+                            height={fontSizeLg}
+                            spaceWidth={width - step1}
+                        />
                     </View>
                 </View>
                 
