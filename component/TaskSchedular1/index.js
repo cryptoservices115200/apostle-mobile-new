@@ -7,6 +7,8 @@ import { StyleSheet, Text, View, Dimensions, Animated } from 'react-native';
 
 import GridView from './GridView';
 
+import Moving from '../Moving';
+
 
 const fontSizeLg = 12;
 const fontSizeMd = 9;
@@ -529,18 +531,19 @@ export default class TaskSchedular extends React.Component {
                             </View>
                         </View>
                     </View>
-                    <View style={{width: width - step1, flex: 1}}>
+                    <View style={{width: width - step1, flex: 1, overflow: 'hidden'}}>
                         {/* <View style={{ position: 'absolute', top: 100, left: 100 }}>
                             <Animated.View style={{width: 50, height: 50, borderColor: 'black', borderStyle: 'solid', borderWidth: '1'}}>
                                 <Text style={{fontSize: 12}}>Drag me!</Text>
                             </Animated.View>
                         </View> */}
                         {/* <HChart></HChart> */}
-                        <GridView 
+                        {/* <GridView 
                             data={data}
                             height={fontSizeLg}
                             spaceWidth={width - step1}
-                        />
+                        /> */}
+                        <Moving />
                     </View>
                 </View>
                 

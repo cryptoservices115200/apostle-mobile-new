@@ -1,314 +1,218 @@
 export default () => {
     return (
-        `<!DOCTYPE html>
+        `<!doctype html>
         <html lang="en">
+        
         <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-            
-            <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-            <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
-            <link rel="stylesheet" href="./main.css">
-            <link rel="stylesheet" href="./theme-default.css">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-            
-            <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-            <script src="./amigo-sorter.min.js"></script>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="theme-color" content="#000000">
+            <link rel="manifest" href="/manifest.json">
+            <link rel="shortcut icon" href="/favicon.ico">
+            <title>React Scheduler Tutorial</title>
             <style>
-                .large-text {
-                    font-size: 24px;
+                body,
+                button,
+                input,
+                p,
+                select,
+                td {
+                    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                    font-size: 14px
                 }
-                .middle-text {
-                    font-size: 18px;
-                }
-                .small-text {
-                    font-size: 12px;
-                }
-                .border {
-                    border: 1px solid gray;
-                }
-                .height-lg {
-                    padding: 8px 15px;
-                }
-                ul {
-                    list-style: none;
+                
+                body {
                     padding: 0;
+                    margin: 0;
+                    background-color: #fff
                 }
-                .p-my-4 {
-                    padding-top: 4px; 
-                    padding-bottom: 4px;
+                
+                a {
+                    color: #1155a3
                 }
-                .p-my-2 {
-                    padding-top: 2px; 
-                    padding-bottom: 2px;
+                
+                .space {
+                    margin: 10px 0 10px 0
                 }
-                .bar {
-                    height: 28px;
-                    border-radius: 1000px;
+                
+                .header {
+                    box-sizing: border-box;
+                    background: #003267;
+                    background: linear-gradient(to right, #011329 0, #00639e 44%, #011329 100%);
+                    padding: 20px 10px;
+                    width: 100%;
+                    color: #fff;
+                    box-shadow: 0 0 10px 5px rgba(0, 0, 0, .75)
                 }
-                .bar1 {
-                    height: 26px;
-                    border-radius: 1000px;
+                
+                .header a {
+                    color: #fff
                 }
-                .bar .sub-bar {
-                    height: 28px;
-                    border-radius: 1000px;
+                
+                .header h1 a {
+                    text-decoration: none
                 }
-                .bar1 .sub-bar {
-                    height: 26px;
-                    border-radius: 1000px;
+                
+                .header h1 {
+                    padding: 0;
+                    margin: 0
                 }
-                .sm-chart {
-                    padding-left: 0;
-                    padding-right: 0;
+                
+                .main {
+                    padding: 10px;
+                    margin-top: 10px
+                }
+                
+                .generated {
+                    color: #999;
+                    margin-top: 10px
+                }
+                
+                .generated a {
+                    color: #999
+                }
+                
+                button {
+                    padding: 5px 10px
                 }
             </style>
-            <script>
-                $( function() {
-                  $('ul.sorter').amigoSorter();
-                });
-            </script>
-            <script>
-                // ** hack - wait until script is loaded from CDN **
-                function initProxy() {
-                if (typeof window.rnRpc !== 'undefined') {
-                    console.log('rnRpc loaded');
-                    window.proxy = window.rnRpc.proxy(); // init a proxy object
-                    window.rnRpc.expose( { document } ); // expose the document object
-                } else {
-                    setTimeout(initProxy, 500);
-                }
-                }
-                initProxy();
-                // **********************************************
-                async function fireNativeAlert() {
-                    await proxy.Alert.alert(
-                      'What is your favorite color?',
-                      'We got green and blue',
-                      [
-                        {text: 'Ask me later'},
-                        {text: 'Green', onPress: window.rnRpc.proxyValue(() => setBgColor('green'))},
-                        {text: 'Blue', onPress: window.rnRpc.proxyValue(() => setBgColor('blue'))},
-                      ],
-                      { cancelable: false }
-                    );
-                }
-            </script>
+            <link href="static/css/main.82e0d2d7.chunk.css" rel="stylesheet">
         </head>
-        <body>
-            
-          <div class="container">
-            <div class="row">
-              <div class="col-4">
-              </div>
-              <div class="col-8 middle-text border">
-              AUGUST 10, 2021
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-2">
-              </div>
-              <div class="col-1 small-text border">
-              EST TIME
-              </div>
-              <div class="col-1 small-text border">
-              ACTUAL TIME
-              </div>
-              <div class="col-8" style="padding: 0;">
-                <div class="d-flex flex-row">
-                    <div class="flex-grow-1 flex-fill small-text border text-center">7:00AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">7:30AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">8:00AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">8:30AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">9:00AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">9:30AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">10:00AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">10:30AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">11:00AM</div>
-                    <div class="flex-grow-1 flex-fill small-text border text-center">11:30AM</div>
+        
+        <body><noscript>You need to enable JavaScript to run this app.</noscript>
+            <div>
+                <div class="header">
+                    <h1><a href="https://code.daypilot.org/77607/react-scheduler-tutorial">React Scheduler Tutorial</a></h1>
+                    <div><a href="https://javascript.daypilot.org/">DayPilot for JavaScript</a> - AJAX Calendar/Scheduling Components for JavaScript/HTML5/jQuery/Angular/React</div>
                 </div>
-              </div>
-            </div>
-            <div class="row border">
-                <div class="col-4">
-                    <div class="row">
-                        <div class="col-6 height-lg border">
-                            Preparation
-                        </div>
-                        <div class="col-3 middle-text border height-lg">
-                        90m
-                        </div>
-                        <div class="col-3 middle-text border height-lg">
-                            93m
-                        </div>  
-                    </div>
-                    <div class="row">
-                        <div class="col-6 small-text height-lg border">
-                            <ul>
-                                <li class="p-my-4">Cut 25g of cabbage</li>
-                                <li class="p-my-4">Slice 24 onions</li>
-                                <li class="p-my-4">Peel 8 potatoes</li>
-                            </ul>
-                        </div>
-                        <div class="col-3 small-text border height-lg">
-                            <ul>
-                                <li class="p-my-4">10m</li>
-                                <li class="p-my-2">
-                                    <button style="padding: 0 5px; border-radius: 10px;"  onclick="fireNativeAlert()">START</button>
-                                </li>
-                                <li class="p-my-2">
-                                    <button style="padding: 0 5px; border-radius: 10px;">START</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-3 small-text border height-lg">
-                            <ul>
-                                <li class="p-my-2">
-                                    <button style="padding: 0 5px; border-radius: 10px;">END</button>
-                                </li>
-                            </ul>
-                        </div>  
-                    </div>
-                    <div class="row">
-                        <div class="col-6 height-lg border" style="padding-bottom: 10px;">
-                            Cookie
-                        </div>
-                        <div class="col-3 middle-text border height-lg">
-                        </div>
-                        <div class="col-3 middle-text border height-lg">
-                        </div>  
-                    </div>
-                    <div class="row">
-                        <div class="col-6 small-text height-lg border">
-                            <ul>
-                                <li class="p-my-4">Cut 25g of cabbage</li>
-                                <li class="p-my-4">Slice 24 onions</li>
-                                <li class="p-my-4">Peel 8 potatoes</li>
-                            </ul>
-                        </div>
-                        <div class="col-3 small-text border height-lg">
-                            <ul>
-                                <li class="p-my-4">10m</li>
-                                <li class="p-my-2">
-                                    <button style="padding: 0 5px; border-radius: 10px;">START</button>
-                                </li>
-                                <li class="p-my-2">
-                                    <button style="padding: 0 5px; border-radius: 10px;">START</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-3 small-text border height-lg">
-                            <ul>
-                                <li class="p-my-2">
-                                    <button style="padding: 0 5px; border-radius: 10px;">END</button>
-                                </li>
-                            </ul>
-                        </div>  
-                    </div>
-                </div>
-                <div class="col-8">
-                    <ul class="sorter">
-                        <li style="padding: 12px 6px; margin-bottom: 0;">
-                            <span style="padding: 0px;border-radius: 1000px; background-color: rgba(0, 255, 255, 0.5);">
-                                <div style="padding: 10px;border-radius: 1000px;width: 100px; background-color: rgba(0, 255, 255, 1);">
-                                </div>
-                            </span>
-                        </li>
-                        <li style="padding: 6px; margin-bottom: 0;">
-                            <span style="padding: 0px;border-radius: 1000px; background-color: rgba(26, 95, 95, 0.5); width: 30%;">
-                                <div style="padding: 10px;border-radius: 1000px;width: 100px; background-color: rgba(0, 255, 255, 1);">
-                                </div>
-                            </span>
-                        </li>
-                        <li style="padding: 6px; margin-bottom: 0;">
-                            <span style="padding: 0px;border-radius: 1000px; background-color: rgba(26, 95, 95, 0.5); width: 30%; margin-left: 30%;">
-                                <div style="padding: 10px;border-radius: 1000px;width: 100px; background-color: rgba(0, 255, 255, 1);">
-                                </div>
-                            </span>
-                        </li>
-                        <li style="padding: 6px; margin-bottom: 0;">
-                            <span style="padding: 0px;border-radius: 1000px; background-color: rgba(26, 95, 95, 0.5); width: 45%; margin-left: 60%;">
-                                <div style="padding: 10px;border-radius: 1000px;width: 100px; background-color: rgba(0, 255, 255, 1);">
-                                </div>
-                            </span>
-                        </li>
-                        <li>
-                        <span style="padding: 10px;">Minory Report</span>
-                        </li>
-                        <li>
-                        <span style="padding: 10px;">Alien</span>
-                        </li>
-                        <li>
-                        <span style="padding: 10px;">Prometeus</span>
-                        </li>
-                    </ul>
+                <div class="main">
+                    <div id="root"></div>
+                    <div class="generated">Generated using <a href="https://builder.daypilot.org/">DayPilot UI Builder</a>.</div>
                 </div>
             </div>
-          </div>
-          
-          <ul class="sorter col-8">
-            <li class="row border">
-                <div class="box height-lg" style="height: 44px">
-                    <div class="total-bar-1 item bar" style="width: 60%; background-color: rgba(0, 255, 255, 0.5);" id="item1">
-                        <div class="sub-bar" style="width: 90%; background-color: rgba(0, 255, 255, 1);">
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="row height-lg" style="margin-bottom: 10px;">
-                <div class="sm-chart" style="height: 28px;">
-                    <div class="total-bar-1 item bar1" style="width: 20%; background-color: rgba(0, 132, 250, 0.5);" id="item1">
-                        <div class="sub-bar" style="width: 100%; background-color: rgba(0, 132, 250, 1);">
-                        </div>
-                    </div>
-                </div>
-                <div class="sm-chart" style="height: 28px">
-                    <div class="total-bar-1 item bar1" style="width: 20%; margin-left: 20%; background-color: rgba(0, 132, 250, 0.5);" id="item1">
-                        <div class="sub-bar" style="width: 100%; background-color: rgba(0, 132, 250, 1);">
-                        </div>
-                    </div>
-                </div>
-                <div class="sm-chart" style="height: 28px">
-                    <div class="total-bar-1 item bar1" style="width: 25%; margin-left: 40%; background-color: rgba(0, 132, 250, 0.5);" id="item1">
-                        <div class="sub-bar" style="width: 70%; margin-left: 10%; background-color: rgba(0, 132, 250, 1);">
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="row border">
-                <div class="box height-lg" style="height: 44px">
-                    <div class="total-bar-1 item bar" style="width: 60%; background-color: rgba(0, 255, 255, 0.5);" id="item1">
-                        <div class="sub-bar" style="width: 90%; background-color: rgba(0, 255, 255, 1);">
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="row height-lg">
-                <div class="sm-chart" style="height: 28px;">
-                    <div class="total-bar-1 item bar1" style="width: 20%; background-color: rgba(0, 132, 250, 0.5);" id="item1">
-                        <div class="sub-bar" style="width: 100%; background-color: rgba(0, 132, 250, 1);">
-                        </div>
-                    </div>
-                </div>
-                <div class="sm-chart" style="height: 28px">
-                    <div class="total-bar-1 item bar1" style="width: 20%; margin-left: 20%; background-color: rgba(0, 132, 250, 0.5);" id="item1">
-                        <div class="sub-bar" style="width: 100%; background-color: rgba(0, 132, 250, 1);">
-                        </div>
-                    </div>
-                </div>
-                <div class="sm-chart" style="height: 28px">
-                    <div class="total-bar-1 item bar1" style="width: 25%; margin-left: 40%; background-color: rgba(0, 132, 250, 0.5);" id="item1">
-                        <div class="sub-bar" style="width: 70%; margin-left: 10%; background-color: rgba(0, 132, 250, 1);">
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
+            <script>
+                ! function(e) {
+                    function r(r) {
+                        for (var n, a, i = r[0], c = r[1], l = r[2], s = 0, p = []; s < i.length; s++) a = i[s], Object.prototype.hasOwnProperty.call(o, a) && o[a] && p.push(o[a][0]), o[a] = 0;
+                        for (n in c) Object.prototype.hasOwnProperty.call(c, n) && (e[n] = c[n]);
+                        for (f && f(r); p.length;) p.shift()();
+                        return u.push.apply(u, l || []), t()
+                    }
+        
+                    function t() {
+                        for (var e, r = 0; r < u.length; r++) {
+                            for (var t = u[r], n = !0, i = 1; i < t.length; i++) {
+                                var c = t[i];
+                                0 !== o[c] && (n = !1)
+                            }
+                            n && (u.splice(r--, 1), e = a(a.s = t[0]))
+                        }
+                        return e
+                    }
+                    var n = {},
+                        o = {
+                            1: 0
+                        },
+                        u = [];
+        
+                    function a(r) {
+                        if (n[r]) return n[r].exports;
+                        var t = n[r] = {
+                            i: r,
+                            l: !1,
+                            exports: {}
+                        };
+                        return e[r].call(t.exports, t, t.exports, a), t.l = !0, t.exports
+                    }
+                    a.e = function(e) {
+                        var r = [],
+                            t = o[e];
+                        if (0 !== t)
+                            if (t) r.push(t[2]);
+                            else {
+                                var n = new Promise((function(r, n) {
+                                    t = o[e] = [r, n]
+                                }));
+                                r.push(t[2] = n);
+                                var u, i = document.createElement("script");
+                                i.charset = "utf-8", i.timeout = 120, a.nc && i.setAttribute("nonce", a.nc), i.src = function(e) {
+                                    return a.p + "static/js/" + ({}[e] || e) + "." + {
+                                        3: "d433dc52"
+                                    }[e] + ".chunk.js"
+                                }(e);
+                                var c = new Error;
+                                u = function(r) {
+                                    i.onerror = i.onload = null, clearTimeout(l);
+                                    var t = o[e];
+                                    if (0 !== t) {
+                                        if (t) {
+                                            var n = r && ("load" === r.type ? "missing" : r.type),
+                                                u = r && r.target && r.target.src;
+                                            c.message = "Loading chunk " + e + " failed.\n(" + n + ": " + u + ")", c.name = "ChunkLoadError", c.type = n, c.request = u, t[1](c)
+                                        }
+                                        o[e] = void 0
+                                    }
+                                };
+                                var l = setTimeout((function() {
+                                    u({
+                                        type: "timeout",
+                                        target: i
+                                    })
+                                }), 12e4);
+                                i.onerror = i.onload = u, document.head.appendChild(i)
+                            }
+                        return Promise.all(r)
+                    }, a.m = e, a.c = n, a.d = function(e, r, t) {
+                        a.o(e, r) || Object.defineProperty(e, r, {
+                            enumerable: !0,
+                            get: t
+                        })
+                    }, a.r = function(e) {
+                        "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
+                            value: "Module"
+                        }), Object.defineProperty(e, "__esModule", {
+                            value: !0
+                        })
+                    }, a.t = function(e, r) {
+                        if (1 & r && (e = a(e)), 8 & r) return e;
+                        if (4 & r && "object" == typeof e && e && e.__esModule) return e;
+                        var t = Object.create(null);
+                        if (a.r(t), Object.defineProperty(t, "default", {
+                                enumerable: !0,
+                                value: e
+                            }), 2 & r && "string" != typeof e)
+                            for (var n in e) a.d(t, n, function(r) {
+                                return e[r]
+                            }.bind(null, n));
+                        return t
+                    }, a.n = function(e) {
+                        var r = e && e.__esModule ? function() {
+                            return e.default
+                        } : function() {
+                            return e
+                        };
+                        return a.d(r, "a", r), r
+                    }, a.o = function(e, r) {
+                        return Object.prototype.hasOwnProperty.call(e, r)
+                    }, a.p = "/", a.oe = function(e) {
+                        throw console.error(e), e
+                    };
+                    var i = this["webpackJsonpreact-scheduler"] = this["webpackJsonpreact-scheduler"] || [],
+                        c = i.push.bind(i);
+                    i.push = r, i = i.slice();
+                    for (var l = 0; l < i.length; l++) r(i[l]);
+                    var f = c;
+                    t()
+                }([])
+            </script>
+            <script src="assets/static/js/2.b1e27847.chunk.js"></script>
+            <script src="assets/static/js/main.af9fb213.chunk.js"></script>
+            <script src="test.js"></script>
+            <script>
+            // document.getElementById("root").innerHTML = "OK"
+            </script>
         </body>
-        </html>
-        `
+        
+        </html>`
     )
 }

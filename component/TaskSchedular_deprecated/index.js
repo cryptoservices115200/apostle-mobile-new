@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, Text, Alert, Dimensions, Platform } from 'react-native';
 import WebViewRpc from 'rn-webview-rpc/native';
+import { WebView } from 'react-native-webview';
 import htmlContent from './index.html.js';
+
+const PolicyHTML = require('./build/index.html');
 
 const target = {
   document: {
@@ -153,7 +156,8 @@ export default class App extends React.Component {
                   this.setState(message)
                 }}
                 injectScriptTag={false}
-                javaScriptEnabled
+                javaScriptEnabled={true}
+                javaScriptEnabledAndroid
                 domStorageEnabled
                 ref={(ref) => { this.webViewRpc = ref; }}
                 target={target}
