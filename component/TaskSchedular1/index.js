@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Animated } from 'react-native';
-import { greaterThan } from "react-native-reanimated";
+import { StyleSheet, Text, View, Dimensions, Animated, ScrollView } from 'react-native';
 
 // import Draggable from 'react-native-draggable';
 
@@ -631,52 +630,65 @@ export default class TaskSchedular extends React.Component {
                             height={fontSizeLg}
                             spaceWidth={width - step1}
                         /> */}
-                        <View style={[{position: 'absolute', backgroundColor: 'tranparent', width: width - step1, height: 1000}, styles.borderTopBox, styles.borderRightBox]}>
-                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex,]}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
-                                ))}
+                        {/* <InfiniteScroll
+                            onLoadMoreAsync={() => {
+                                // this.loadMorePage()
+                            }}
+                            horizontal={false}  //true - if you want in horizontal
+                            style={styles.scrollView}
+                            {...prop}
+                        > */}
+                        <ScrollView horizontal={true}>
+                            <View style={{width: 10000}}>
+                                <View style={[{position: 'absolute', backgroundColor: 'tranparent', width: width - step1, height: 1000}, styles.borderTopBox, styles.borderRightBox]}>
+                                    <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex,]}>
+                                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                            <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                        ))}
+                                    </View>
+                                    <View style={[{width: width - step1, height: fontSizeLg * 4.5}, styles.borderBottomBox, styles.dFlex,]}>
+                                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                            <View key={timePoint} style={[{height: fontSizeLg * 4.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                        ))}
+                                    </View>
+                                    <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                            <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                        ))}
+                                    </View>
+                                    <View style={[{width: width - step1, height: fontSizeLg * 4.5}, styles.borderBottomBox, styles.dFlex]}>
+                                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                            <View key={timePoint} style={[{height: fontSizeLg * 4.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                        ))}
+                                    </View>
+                                    <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                            <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                        ))}
+                                    </View>
+                                    <View style={[{width: width - step1, height: fontSizeLg * 9}, styles.borderBottomBox, styles.dFlex]}>
+                                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                            <View key={timePoint} style={[{height: fontSizeLg * 9, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                        ))}
+                                    </View>
+                                    <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                            <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                        ))}
+                                    </View>
+                                    <View style={[{width: width - step1, height: fontSizeLg * 10.5}, styles.dFlex]}>
+                                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                            <View key={timePoint} style={[{height: fontSizeLg * 10.5, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                        ))}
+                                    </View>
+                                    
+                                </View>
+                                
+                                <View style={{position: 'absolute', width: 3, backgroundColor: 'green', height:2000, left: currentTimePos,}}></View>
+                                <Moving />
                             </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 4.5}, styles.borderBottomBox, styles.dFlex,]}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 4.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
-                                ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
-                                ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 4.5}, styles.borderBottomBox, styles.dFlex]}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 4.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
-                                ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
-                                ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 9}, styles.borderBottomBox, styles.dFlex]}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 9, width: (width - step1) / 10}, styles.borderRightBox]}></View>
-                                ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
-                                ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 10.5}, styles.dFlex]}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 10.5, width: (width - step1) / 10}, styles.borderRightBox]}></View>
-                                ))}
-                            </View>
-                            
-                        </View>
-                        
-                        <View style={{position: 'absolute', width: 3, backgroundColor: 'green', height:2000, left: currentTimePos,}}></View>
-                        <Moving />
+                        </ScrollView>
+                        {/* </InfiniteScroll> */}
                     </View>
                 </View>
                 

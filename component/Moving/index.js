@@ -189,14 +189,14 @@ const DraggableGanttBar = ({ prop_x, prop_y, prop_marginX, prop_width1, prop_wid
                             y: yPosI,
                         })
                         // setTimeout(() => {
-                            setSPos({
-                                ...sPos,
-                                x: left,
-                                y: yPosI,
-                            })
+                            // setSPos({
+                            //     ...sPos,
+                            //     x: left,
+                            //     y: yPosI,
+                            // })
                         // }, 300)
                     } else {
-                        setSPos(sPos)
+                        // setSPos(sPos)
                     }
                     setDisabled(true)
                 }
