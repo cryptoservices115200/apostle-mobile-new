@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, Animated } from 'react-native';
+import { greaterThan } from "react-native-reanimated";
 
 // import Draggable from 'react-native-draggable';
 
@@ -14,15 +15,15 @@ const fontSizeLg = 12;
 const fontSizeMd = 9;
 const fontSizeSm = 6;
 
-const paddingLg = 10;
+const paddingLg = 25;
 const paddingMd = 7;
 const paddingSm = 5;
 const marginLg = 10;
 const margingMd = 7;
 const margingSm = 5;
 
-const step1 = 180; // 1/3
-const step2 = 90; // 1/5
+const step1 = 280; // 1/3
+const step2 = 190; // 1/5
 // 1152 px
 const styles = StyleSheet.create({
     dFlex: {
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     },
     dateBar: {
         fontSize: fontSizeMd,
-        color: 'gray',
+        color: 'white',
         marginLeft: step1, 
     },
     timeBar: {
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
     },
     mainText: {
-        color: 'gray',
+        color: 'white',
     }
 })
 
@@ -277,6 +278,8 @@ let data =
   marginLeft2: 0,
 },]
 
+const currentTimePos = 500
+
 
 export default class TaskSchedular extends React.Component {
     constructor(props) {
@@ -298,16 +301,22 @@ export default class TaskSchedular extends React.Component {
             height
         } = this.state;
         return (
-            <View style={{width: width, height: height, paddingTop: 70, backgroundColor: 'black'}}>
+            <View style={{width: width, height: height, backgroundColor: 'black'}}>
+                <View style={{height: fontSizeLg * 5, marginBottom: 70 - fontSizeLg * 5, justifyContent: 'center'}}>
+                    <Text style={{fontSize: fontSizeLg * 3, color: 'white', marginLeft: '30'}}>Let's go Har!</Text>
+                </View>
+                <View style={{position: 'absolute', right: 10, width: 200, height: fontSizeLg * 5, justifyContent: 'center'}}>
+                    <Text style={{fontSize: fontSizeLg*2, color: 'white'}}>Task Manager</Text>
+                </View>
                 <View style={[styles.dateBar, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox]} >
-                    <Text style={styles.mainText}>AUGUST 10.2021</Text>
+                    <Text style={styles.mainText}>AUGUST 10.2021 📆</Text>
                 </View>
                 <View style={[styles.timeBar, styles.dFlex]} >
                     <Text style={[styles.timeTitle, styles.mainText, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox, {width: (step1 - step2) / 2}]}>EST TIME</Text>
                     <Text style={[styles.timeTitle, styles.mainText, styles.borderTopBox, styles.borderRightBox, {width: (step1 - step2) / 2}]}>ACTUAL TIME</Text>
                     {/* <View style={style.dFlex}> */}
-                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                            <Text style={[styles.timePoint, styles.mainText, styles.borderTopBox, styles.borderRightBox, { width: (width - step1) / 10}]} key={timePoint}>{timePoint} AM</Text>
+                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map((timePoint, id) => (
+                            <Text style={[styles.timePoint, styles.mainText, styles.borderTopBox, styles.borderRightBox, { width: (width - step1) / 10, fontWeight: (width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10 ? 'bold' : ''}]} key={timePoint}>{timePoint} AM</Text>
                         ))}
                     {/* </View> */}
                 </View>
@@ -319,7 +328,7 @@ export default class TaskSchedular extends React.Component {
                                 <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>90m</Text>
                                 </View>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>93m</Text>
                                 </View>
                             </View>
@@ -332,7 +341,7 @@ export default class TaskSchedular extends React.Component {
                                 <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>10m</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
                                     <Text
                                         style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
                                         onPress={() => console.log("--")}
@@ -345,13 +354,13 @@ export default class TaskSchedular extends React.Component {
                                 <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Slice 24 onions</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
                                     <Text
                                         style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
                                         onPress={() => console.log("--")}
                                     >START</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox, styles.borderRightBox,]}>
                                 </View>
                             </View>
                         </View>
@@ -360,13 +369,13 @@ export default class TaskSchedular extends React.Component {
                                 <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Pool 8 potatoes</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
                                     <Text
                                         style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
                                         onPress={() => console.log("--")}
                                     >START</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox, styles.borderRightBox,]}>
                                 </View>
                             </View>
                         </View>
@@ -376,7 +385,7 @@ export default class TaskSchedular extends React.Component {
                                 <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
                                 </View>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
                                 </View>
                             </View>
@@ -392,7 +401,7 @@ export default class TaskSchedular extends React.Component {
                                         onPress={() => console.log("--")}
                                     >START</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
                                 </View>
                             </View>
                         </View>
@@ -401,13 +410,13 @@ export default class TaskSchedular extends React.Component {
                                 <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Sautee ground beef</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
                                     <Text
                                         style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
                                         onPress={() => console.log("--")}
                                     >START</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox]}>
                                 </View>
                             </View>
                         </View>
@@ -416,13 +425,13 @@ export default class TaskSchedular extends React.Component {
                                 <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Apply onions</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
                                     <Text
                                         style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
                                         onPress={() => console.log("--")}
                                     >START</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
                                 </View>
                             </View>
                         </View>
@@ -432,7 +441,7 @@ export default class TaskSchedular extends React.Component {
                                 <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
                                 </View>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
                                 </View>
                             </View>
@@ -448,7 +457,7 @@ export default class TaskSchedular extends React.Component {
                                         onPress={() => console.log("--")}
                                     >START</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
                                 </View>
                             </View>
                         </View>
@@ -457,28 +466,62 @@ export default class TaskSchedular extends React.Component {
                                 <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Apply Stickers</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
                                     <Text
                                         style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
                                         onPress={() => console.log("--")}
                                     >START</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox]}>
                                 </View>
                             </View>
                         </View>
                         <View style={[styles.dFlex, {width: step1}]}>
                             <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>🔽Package all burgers</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
                                     <Text
                                         style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
                                         onPress={() => console.log("--")}
                                     >PRINT</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
+                                </View>
+                            </View>
+                        </View>
+                        
+                        <View style={[styles.dFlex, {width: step1}]}>
+                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
+                            </View>
+                            <View style={[styles.dFlex, {width: step1 - step2}]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
+                                </View>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.dFlex, {width: step1}]}>
+                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
+                            </View>
+                            <View style={[styles.dFlex, {width: step1 - step2}]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
+                                </View>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.dFlex, {width: step1}]}>
+                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
+                            </View>
+                            <View style={[styles.dFlex, {width: step1 - step2}]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
+                                </View>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
                                 </View>
                             </View>
                         </View>
@@ -488,50 +531,95 @@ export default class TaskSchedular extends React.Component {
                                 <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
                                 </View>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
                                     <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
                                 </View>
                             </View>
                         </View>
                         <View style={[styles.dFlex, {width: step1}]}>
                             <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderTopBox, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>John Dingers(3)</Text>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>🔽John Dingers(3)</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
                                 <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderRightBox, styles.borderLeftBox,]}>
+                                </View>
+                            </View>
+                        </View>
+                        
+                        <View style={[styles.dFlex, {width: step1}]}>
+                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
+                            </View>
+                            <View style={[styles.dFlex, {width: step1 - step2}]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
+                                </View>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.dFlex, {width: step1}]}>
+                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
+                            </View>
+                            <View style={[styles.dFlex, {width: step1 - step2}]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
+                                </View>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
                                 </View>
                             </View>
                         </View>
                         <View style={[styles.dFlex, {width: step1}]}>
                             <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Peter Metro</Text>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>🔽Peter Metro</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox]}>
                                 </View>
                             </View>
                         </View>
                         <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Zach Lass</Text>
+                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
                             </View>
                             <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
+                                </View>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.dFlex, {width: step1}]}>
+                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
+                            </View>
+                            <View style={[styles.dFlex, {width: step1 - step2}]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
+                                </View>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.dFlex, {width: step1}, styles.borderBottomBox]}>
+                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
+                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>🔽Zach Lass</Text>
+                            </View>
+                            <View style={[styles.dFlex, {width: step1 - step2}]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
                                     <Text
                                         style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
                                         onPress={() => console.log("--")}
                                     >START</Text>
                                 </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
+                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
                                 </View>
                             </View>
                         </View>
                     </View>
-                    <View style={{width: width - step1, flex: 1, overflow: 'hidden'}}>
+                    <View style={[{width: width - step1, flex: 1, overflow: 'hidden'}, styles.borderBottomBox]}>
                         {/* <View style={{ position: 'absolute', top: 100, left: 100 }}>
                             <Animated.View style={{width: 50, height: 50, borderColor: 'black', borderStyle: 'solid', borderWidth: '1'}}>
                                 <Text style={{fontSize: 12}}>Drag me!</Text>
@@ -543,6 +631,51 @@ export default class TaskSchedular extends React.Component {
                             height={fontSizeLg}
                             spaceWidth={width - step1}
                         /> */}
+                        <View style={[{position: 'absolute', backgroundColor: 'tranparent', width: width - step1, height: 1000}, styles.borderTopBox, styles.borderRightBox]}>
+                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex,]}>
+                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                ))}
+                            </View>
+                            <View style={[{width: width - step1, height: fontSizeLg * 4.5}, styles.borderBottomBox, styles.dFlex,]}>
+                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                    <View key={timePoint} style={[{height: fontSizeLg * 4.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                ))}
+                            </View>
+                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                ))}
+                            </View>
+                            <View style={[{width: width - step1, height: fontSizeLg * 4.5}, styles.borderBottomBox, styles.dFlex]}>
+                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                    <View key={timePoint} style={[{height: fontSizeLg * 4.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                ))}
+                            </View>
+                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                ))}
+                            </View>
+                            <View style={[{width: width - step1, height: fontSizeLg * 9}, styles.borderBottomBox, styles.dFlex]}>
+                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                    <View key={timePoint} style={[{height: fontSizeLg * 9, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                ))}
+                            </View>
+                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                ))}
+                            </View>
+                            <View style={[{width: width - step1, height: fontSizeLg * 10.5}, styles.dFlex]}>
+                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                    <View key={timePoint} style={[{height: fontSizeLg * 10.5, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                ))}
+                            </View>
+                            
+                        </View>
+                        
+                        <View style={{position: 'absolute', width: 3, backgroundColor: 'green', height:2000, left: currentTimePos,}}></View>
                         <Moving />
                     </View>
                 </View>
