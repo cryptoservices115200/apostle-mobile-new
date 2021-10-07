@@ -13,7 +13,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       {/* <Temp /> */}
-      {/* <Moving /> */}
+      <Moving />
       {/* <GanttWeb /> */}
       {/* <TaskSchedular /> */}
       <StatusBar style="auto" />
