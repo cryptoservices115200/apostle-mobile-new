@@ -638,8 +638,8 @@ export default class TaskSchedular extends React.Component {
                             style={styles.scrollView}
                             {...prop}
                         > */}
-                        <ScrollView horizontal={true}>
-                            <View style={{width: 10000}}>
+                        {/* <ScrollView horizontal={true}>
+                            <View style={{width: 10000}}> */}
                                 <View style={[{position: 'absolute', backgroundColor: 'tranparent', width: width - step1, height: 1000}, styles.borderTopBox, styles.borderRightBox]}>
                                     <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex,]}>
                                         {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
@@ -686,8 +686,8 @@ export default class TaskSchedular extends React.Component {
                                 
                                 <View style={{position: 'absolute', width: 3, backgroundColor: 'green', height:2000, left: currentTimePos,}}></View>
                                 <Moving />
-                            </View>
-                        </ScrollView>
+                            {/* </View>
+                        </ScrollView> */}
                         {/* </InfiniteScroll> */}
                     </View>
                 </View>

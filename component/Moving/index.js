@@ -181,8 +181,7 @@ const DraggableGanttBar = ({ prop_x, prop_y, prop_marginX, prop_width1, prop_wid
                             break;
                         }
                     }
-                    if (freeSpace) {
-                        console.log("Free")
+                    if (freeSpace && yPosI>0) {
                         updateData({
                             ...sPos,
                             id: id,
