@@ -95,12 +95,10 @@ const sHeight = 18;
 const width = Dimensions.get('window').width - 180;
 
 const startX = 280;
-const startY = 190;
+const startY = 106;
 
 const nearestY = (Y) => {
-    // console.log(Y)
-    let temp = (Math.round((Y) / sHeight)*sHeight)
-    if (temp < sHeight) temp = sHeight
+    let temp = (Math.ceil((Y - sHeight) / sHeight)*sHeight)
     return temp
 }
 
@@ -133,7 +131,7 @@ const DraggableGanttBar = ({ prop_x, prop_y, prop_marginX, prop_width1, prop_wid
             color1: prop_color1,
             color2: prop_color2,
         })
-    }, [])
+    }, [prop_x])
     return (
         <Draggable 
             id = { id }
@@ -142,7 +140,7 @@ const DraggableGanttBar = ({ prop_x, prop_y, prop_marginX, prop_width1, prop_wid
             renderSize = { 36 }
             touchableOpacityProps={0.7}
             // disabled = {disabled}
-            // shouldReverse
+            shouldReverse
             onReverse = {(e) => {
                 console.log(e)
             }}
@@ -151,29 +149,31 @@ const DraggableGanttBar = ({ prop_x, prop_y, prop_marginX, prop_width1, prop_wid
             }}
             onDragRelease = {
                 ({ nativeEvent }, gestureState) => {
-                    let left = (nativeEvent.pageX - startX)
+                    let left =  sPos.x - (nativeEvent.locationX + startX - nativeEvent.pageX)
                     let right = left + sPos.width1
-                    let yPosI = nearestY(nativeEvent.pageY - startY)
-                    console.log(nativeEvent.locationX)
-                    console.log(nativeEvent.locationY)
+                    let yPosI = nearestY(sPos.y - nativeEvent.locationY - startY + nativeEvent.pageY)
                     let freeSpace = true
                     for (let i = 0; i < barData.length; i ++) {
                         if (barData[i].id == id) {
                             continue;
-                        }
-                        if (Math.abs(yPosI - barData[i].y) < 10) {
-                            if ((left > barData[i].x && left < barData[i].x + barData[i].width) || (right < barData[i].x + barData[i].width && right > barData[i].x)) {
-                                freeSpace = false
-                                break;
-                            }
-                        }
-                        for (let j = 0; j < barData[i].sublanes.length; j ++)
-                        {
-                            if (barData[i].sublanes[j].id == id) {continue}
-                            if (Math.abs(yPosI - barData[i].sublanes[j].y) < 10) {
-                                if ((left > barData[i].sublanes[j].x && left < barData[i].sublanes[j].x + barData[i].sublanes[j].width) || (right < barData[i].sublanes[j].x + barData[i].sublanes[j].width && right > barData[i].sublanes[j].x)) {
+                        } else {
+                            if (Math.abs(yPosI - barData[i].y) < 10) {
+                                if ((left > barData[i].x && left < barData[i].x + barData[i].width1) || (right < barData[i].x + barData[i].width1 && right > barData[i].x)) {
                                     freeSpace = false
                                     break;
+                                }
+                            }
+                            for (let j = 0; j < barData[i].sublanes.length; j ++)
+                            {
+                                if (barData[i].sublanes[j].id == id) {
+                                    continue;
+                                } else {
+                                    if (Math.abs(yPosI - barData[i].sublanes[j].y) < 10) {
+                                        if ((left > barData[i].sublanes[j].x && left < barData[i].sublanes[j].x + barData[i].sublanes[j].width1) || (right < barData[i].sublanes[j].x + barData[i].sublanes[j].width1 && right > barData[i].sublanes[j].x)) {
+                                            freeSpace = false
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -182,6 +182,7 @@ const DraggableGanttBar = ({ prop_x, prop_y, prop_marginX, prop_width1, prop_wid
                         }
                     }
                     if (freeSpace) {
+                        console.log("Free")
                         updateData({
                             ...sPos,
                             id: id,
@@ -196,7 +197,7 @@ const DraggableGanttBar = ({ prop_x, prop_y, prop_marginX, prop_width1, prop_wid
                             // })
                         // }, 300)
                     } else {
-                        // setSPos(sPos)
+                        setSPos(sPos)
                     }
                     setDisabled(true)
                 }
@@ -213,9 +214,10 @@ const DraggableGanttBar = ({ prop_x, prop_y, prop_marginX, prop_width1, prop_wid
 
 export default function App() {
     const [barData, setBarData] = useState([])
+    const [visible, setVisible] = useState(true)
     useEffect(() => {
         let yPos = -1
-        setBarData([...chart.lanes.map((lane, id) => {
+        let temp = [...chart.lanes.map((lane, id) => {
             yPos ++;
             return ({
                 id: (Math.random() * 10000).toString(),
@@ -240,7 +242,9 @@ export default function App() {
                     })
                 })
             })
-        })])
+        })]
+        console.log(temp)
+        setBarData(temp)
     }, [])
     return ( 
         <View 
@@ -254,9 +258,10 @@ export default function App() {
             }}
         >
             {/* <View style={{ width: 100 }}> */}
-                { barData.map((barGroup, id) => (
+                { visible ? barData.map((barGroup, id) => (
                     <React.Fragment key={id} >
                         <DraggableGanttBar 
+                            id={barGroup.id}
                             prop_x={barGroup.x}
                             prop_y={barGroup.y}
                             prop_marginX={barGroup.marginX}
@@ -265,32 +270,41 @@ export default function App() {
                             prop_color1={barGroup.color1}
                             prop_color2={barGroup.color2}
                             barData={barData}
-                            updateData={(data) => setBarData((old_barData) => {
-                                return old_barData.map(sBarData => {
+                            updateData={(data) => {
+                                let tempBarData = barData.map(sBarData => {
                                     if (sBarData.id == data.id) {
                                         return ({
                                             ...sBarData,
-                                            data
+                                            x: data.x,
+                                            y: data.y
                                         })
                                     }
                                     return ({
                                         sBarData,
                                         sublanes: sBarData.sublanes.map(sublane => {
                                             if (sublane.id == data.id) {
+                                                console.log("++")
                                                 return ({
                                                     ...sublane,
-                                                    data,
+                                                    x: data.x,
+                                                    y: data.y
                                                 })
                                             }
                                             return sublane
                                         })
                                     })
                                 })
-                            })}
+                                setVisible(false)
+                                setBarData(tempBarData)
+                                setTimeout(() => {
+                                    setVisible(true)
+                                }, 100);
+                            }}
                         />
                         { barGroup.sublanes.map((sBar, iid) => (
                             <DraggableGanttBar 
                                 key={iid}
+                                id={sBar.id}
                                 prop_x={sBar.x}
                                 prop_y={sBar.y}
                                 prop_marginX={sBar.marginX}
@@ -299,32 +313,44 @@ export default function App() {
                                 prop_color1={sBar.color1}
                                 prop_color2={sBar.color2}
                                 barData={barData}
-                                updateData={(data) => setBarData((old_barData) => {
-                                    return old_barData.map(sBarData => {
+                                updateData={(data) => {
+                                    console.log(data)
+                                    let tempBarData = barData.map(sBarData => {
                                         if (sBarData.id == data.id) {
                                             return ({
                                                 ...sBarData,
-                                                data
+                                                x: data.x,
+                                                y: data.y
                                             })
                                         }
                                         return ({
-                                            sBarData,
+                                            ...sBarData,
                                             sublanes: sBarData.sublanes.map(sublane => {
                                                 if (sublane.id == data.id) {
+                                                    console.log("++")
+                                                    console.log(data)
                                                     return ({
                                                         ...sublane,
-                                                        data,
+                                                        x: data.x,
+                                                        y: data.y
                                                     })
                                                 }
                                                 return sublane
                                             })
                                         })
                                     })
-                                })}
+                                    setVisible(false)
+                                    console.log(barData)
+                                    console.log(tempBarData)
+                                    setBarData(tempBarData)
+                                    setTimeout(() => {
+                                        setVisible(true)
+                                    }, 100);
+                                }}
                             />
                         )) }
                     </React.Fragment>
-                )) }
+                )) : <Text>Loading</Text> }
             {/* </View> */}
         </View >
     );
