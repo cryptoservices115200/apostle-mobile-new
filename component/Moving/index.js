@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, ScrollView } from 'react-native';
 import Draggable from 'react-native-draggable';
 
+const timeStep = 300
+
 var chart = {
     milestones: [
       {
@@ -297,7 +299,7 @@ export default function App() {
                                 setBarData(tempBarData)
                                 setTimeout(() => {
                                     setVisible(true)
-                                }, 100);
+                                }, timeStep);
                             }}
                         />
                         { barGroup.sublanes.map((sBar, iid) => (
@@ -344,7 +346,7 @@ export default function App() {
                                     setBarData(tempBarData)
                                     setTimeout(() => {
                                         setVisible(true)
-                                    }, 100);
+                                    }, timeStep);
                                 }}
                             />
                         )) }
