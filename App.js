@@ -5,9 +5,9 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import TaskSchedular from './component/TaskSchedular1';
 // import Gantt from './component/Gantt';
-import GanttWeb from './component/GanttWeb';
-import Temp from './component/TaskSchedular_deprecated';
-import Moving from './component/Moving';
+// import GanttWeb from './component/GanttWeb';
+// import Temp from './component/TaskSchedular_deprecated';
+// import Moving from './component/Moving';
 
 export default function App() {
   return (

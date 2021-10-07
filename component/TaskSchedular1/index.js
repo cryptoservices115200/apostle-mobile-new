@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Dimensions, Animated } from 'react-native';
 
 // import HChart from './HChart';
 
-import GridView from './GridView';
+// import GridView from './GridView';
 
 import Moving from '../Moving';
 

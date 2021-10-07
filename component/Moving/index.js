@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import Draggable from 'react-native-draggable';
 
-import { v4 as uuidv4 } from 'uuid';
-
 var chart = {
     milestones: [
       {
