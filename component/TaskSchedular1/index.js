@@ -302,7 +302,7 @@ export default class TaskSchedular extends React.Component {
         return (
             <View style={{width: width, height: height, backgroundColor: 'black'}}>
                 <View style={{height: fontSizeLg * 5, marginBottom: 70 - fontSizeLg * 5, justifyContent: 'center'}}>
-                    <Text style={{fontSize: fontSizeLg * 3, color: 'white', marginLeft: '30'}}>Let's go Har!</Text>
+                    <Text style={{fontSize: fontSizeLg * 3, color: 'white', marginLeft: 30}}>Let's go Har!</Text>
                 </View>
                 <View style={{position: 'absolute', right: 10, width: 200, height: fontSizeLg * 5, justifyContent: 'center'}}>
                     <Text style={{fontSize: fontSizeLg*2, color: 'white'}}>Task Manager</Text>
