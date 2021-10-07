@@ -13,9 +13,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       {/* <Temp /> */}
-      <Moving />
+      {/* <Moving /> */}
       {/* <GanttWeb /> */}
-      {/* <TaskSchedular /> */}
+      <TaskSchedular />
       <StatusBar style="auto" />
     </View>
   );
