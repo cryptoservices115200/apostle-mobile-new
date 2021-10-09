@@ -96,8 +96,8 @@ var chart = {
 const sHeight = 18;
 const width = Dimensions.get('window').width - 180;
 
-const startX = 210;
-const startY = 86;
+const startX = 280;
+const startY = 106;
 
 const nearestY = (Y) => {
     let temp = (Math.ceil((Y - sHeight) / sHeight)*sHeight)
@@ -315,7 +315,6 @@ export default function App() {
                                 prop_color2={sBar.color2}
                                 barData={barData}
                                 updateData={(data) => {
-                                    console.log(data)
                                     let tempBarData = barData.map(sBarData => {
                                         if (sBarData.id == data.id) {
                                             return ({

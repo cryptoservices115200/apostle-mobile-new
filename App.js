@@ -9,6 +9,8 @@ import TaskSchedular from './component/TaskSchedular1';
 // import Temp from './component/TaskSchedular_deprecated';
 // import Moving from './component/Moving';
 
+// Styled Component
+
 export default function App() {
   return (
     <View style={styles.container}>
