@@ -204,7 +204,7 @@ export default class TaskSchedular extends React.Component {
         })
         this.setState({
             scrollWidth: width - step1,
-            scrollMargin: 0,
+            scrollMargin: 300,
         })
         let yPos = -1
         let temp = [...chart.lanes.map((lane, id) => {
