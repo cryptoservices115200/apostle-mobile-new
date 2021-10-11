@@ -184,7 +184,7 @@ export default class TaskSchedular extends React.Component {
                     <MainText fontSize={fontSizeLg*2}>Task Manager</MainText>
                 </HeaderButton>
                 <MonthSelector>
-                    <MainText>AUGUST 10.2021 📆</MainText>
+                    <MainText >AUGUST 10.2021 📆</MainText>
                 </MonthSelector>
                 <TimeLineBar style={{height: 20}}>
                     <BtnGroup>
@@ -678,7 +678,7 @@ const mainText = css`
 `;
 
 const MonthSelector = styled.View`
-    fontSize: ${fontSizeMd};
+    font-size: ${fontSizeMd};
     color: white;
     margin-left: ${step1};
     box-sizing: border-box;
@@ -786,7 +786,7 @@ const CurrentTimeLine = styled.View`
 `;
 
 const MainText = styled.Text`
-    font-size: ${props => props.fontSize};
+    font-size: ${props => props.fontSize ? props.fontSize : fontSizeLg};
     color: white;
     width: ${props => props.width ? props.width : 'auto'};
     justify-content: center;
