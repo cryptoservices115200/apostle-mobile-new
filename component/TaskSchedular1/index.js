@@ -756,7 +756,7 @@ const DNDBoard = styled.View`
 
 const DNDGrid = styled.View`
     position: absolute; 
-    background-color: tranparent; 
+    background-color: 'rgba(0,0,0,0)'; 
     width: ${props => props.width - step1}; 
     height: 1000;
     ${borderTop}

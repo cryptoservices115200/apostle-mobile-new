@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, createContext, useState } from "react";
-import { Animated, PanResponder, StyleSheet, View, SafeAreaView, Text } from "react-native";
+import React, { useRef, useState } from "react";
+import { Animated, PanResponder, View, } from "react-native";
 
 const floorStep = 18;
 
@@ -92,13 +92,6 @@ const DraggableView = ({id, x, y, width1, width2, color1, color2, marginX, exist
             y: nearestFloor(startPos.pan_y0 + gestureState.dy),
             width1: width1,
         });
-        // if (startPos.pan_x0 + gestureState.dx < 200) {
-        //       Animated.spring(
-        //         pan, // Auto-multiplexed
-        //         { toValue: { x: startPos.pan_x0, y: startPos.pan_y0 } } // Back to zero
-        //       ).start();
-        // } else {
-        // }
     },
   });
 
