@@ -790,7 +790,7 @@ const MainText = styled.Text`
     color: white;
     width: ${props => props.width ? props.width : 'auto'};
     justify-content: center;
-    align-items: ${props => props.pos == 'start' ? 'start' : 'center'};
+    align-items: ${props => props.pos == 'start' ? 'flex-start' : 'center'};
 `;
 
 const MainBtn = styled.Text`
