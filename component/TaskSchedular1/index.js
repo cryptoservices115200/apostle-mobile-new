@@ -681,7 +681,6 @@ const MonthSelector = styled.View`
     font-size: ${fontSizeMd};
     color: white;
     margin-left: ${step1};
-    box-sizing: border-box;
     ${borderLeft}
     ${borderTop}
     ${borderRight}
