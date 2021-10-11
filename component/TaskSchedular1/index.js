@@ -18,13 +18,13 @@ const step2 = 190; // 1/5
 const sHeight = 18;
 
 const borderRight_Temp = {
-    borderRightWidth: 1, 
-    borderStyle: 'solid', 
+    borderRightWidth: 1,
+    borderStyle: 'solid',
     borderRightColor: 'gray'
 }
 const borderTop_Temp = {
-    borderTopWidth: 1, 
-    borderStyle: 'solid', 
+    borderTopWidth: 1,
+    borderStyle: 'solid',
     borderTopColor: 'gray'
 }
 
@@ -135,6 +135,7 @@ export default class TaskSchedular extends React.Component {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
         })
+      console.log(width)
         this.setState({
             scrollWidth: width - step1,
             scrollMargin: 0,
@@ -188,19 +189,27 @@ export default class TaskSchedular extends React.Component {
                 </MonthSelector>
                 <TimeLineBar style={{height: 20}}>
                     <BtnGroup>
-                        <MainText width={'50%'} style={borderRight_Temp}>EST TIME</MainText>
-                        <MainText width={'50%'} style={borderRight_Temp}>ACTUAL TIME</MainText>
+                      <BarItem>
+                        <MainText width={'50%'} >EST TIME</MainText>
+                      </BarItem>
+                      <BarItem>
+                        <MainText width={'50%'} >ACTUAL TIME</MainText>
+                      </BarItem>
                     </BtnGroup>
                     {/* <View style={style.dFlex}> */}
                         {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map((timePoint, id) => (
-                            <MainText style={[{ width: (width - step1) / 10 - (id === 9 ? 1 : 0), fontWeight: ((width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10) ? 'bold' : 'normal'}, borderTop_Temp, borderRight_Temp]} key={timePoint}>{timePoint} AM</MainText>
+                          <BarItem width={width - 2} style={id == 9 ? {borderRightWidth: 1, borderRightColor: 'gray', borderStyle: 'solid'} : {}}>
+                            <MainText style={[{fontWeight: ((width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10) ? 'bold' : 'normal'}]} key={timePoint}>{timePoint} AM</MainText>
+                          </BarItem>
                         ))}
                     {/* </View> */}
                 </TimeLineBar>
                 <MainBoard>
                     <LeftSidebar>
                         <MainItem>
-                            <MainItemTitle>🔽Preparation</MainItemTitle>
+                            <MainItemTitle>
+                              <MainText fontSize={fontSizeLg} pos={'start'}>🔽Preparation</MainText>
+                            </MainItemTitle>
                             <BtnGroup>
                                 <BtnText>
                                     <MainText fontSize={fontSizeSm}>90m</MainText>
@@ -246,7 +255,9 @@ export default class TaskSchedular extends React.Component {
                             </BtnGroup>
                         </SubItem>
                         <MainItem>
-                            <MainItemTitle>🔽Cooking</MainItemTitle>
+                            <MainItemTitle>
+                              <MainText fontSize={fontSizeLg} pos={'start'}>🔽Cooking</MainText>
+                            </MainItemTitle>
                             <BtnGroup>
                                 <BtnText>
                                 </BtnText>
@@ -286,11 +297,13 @@ export default class TaskSchedular extends React.Component {
                                     <MainBtn
                                     >START</MainBtn>
                                 </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
+                                <BtnText style={borderRight_Temp}/>
                             </BtnGroup>
                         </SubItem>
                         <MainItem>
-                            <MainItemTitle>🔽Packaging</MainItemTitle>
+                            <MainItemTitle>
+                              <MainText fontSize={fontSizeLg} pos={'start'}>🔽Packaging</MainText>
+                            </MainItemTitle>
                             <BtnGroup>
                                 <BtnText>
                                 </BtnText>
@@ -334,7 +347,7 @@ export default class TaskSchedular extends React.Component {
                                 </BtnText>
                             </BtnGroup>
                         </SubItem>
-                        
+
                         <SubItem>
                             <SubItemTitle>
                                 <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
@@ -369,7 +382,9 @@ export default class TaskSchedular extends React.Component {
                             </BtnGroup>
                         </SubItem>
                         <MainItem>
-                            <MainItemTitle>🔽Delievery</MainItemTitle>
+                            <MainItemTitle>
+                              <MainText fontSize={fontSizeLg} pos={'start'}>🔽Delievery</MainText>
+                            </MainItemTitle>
                             <BtnGroup>
                                 <BtnText>
                                 </BtnText>
@@ -388,7 +403,7 @@ export default class TaskSchedular extends React.Component {
                                 </BtnText>
                             </BtnGroup>
                         </SubItem>
-                        
+
                         <SubItem>
                             <SubItemTitle>
                                 <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
@@ -460,7 +475,7 @@ export default class TaskSchedular extends React.Component {
                     </LeftSidebar>
                     <DNDBoard width={width}>
                         <DNDGrid width={width}>
-                            <DNDGridRow width={width} height={fontSizeLg * 1.5 - 1}>
+                            <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
@@ -470,7 +485,7 @@ export default class TaskSchedular extends React.Component {
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 1.5 - 1}>
+                            <DNDGridRow width={width} height={fontSizeLg * 1.5 +1}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
@@ -480,7 +495,7 @@ export default class TaskSchedular extends React.Component {
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 1.5 - 1}>
+                            <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
@@ -490,30 +505,30 @@ export default class TaskSchedular extends React.Component {
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 9 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 1.5 - 1}>
+                            <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 10.5}>
+                            <DNDGridRow width={width} height={fontSizeLg * 10.5 + 1}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 10.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
-                            
+
                         </DNDGrid>
-                        
-                        <CurrentTimeLine left={currentTimePos}></CurrentTimeLine>
-                        <ScrollView style={{width: width - step1, paddingLeft: this.state.scrollMargin}} horizontal={true}>
+
+                        <CurrentTimeLine left={currentTimePos}/>
+                        <ScrollView alwaysBounceHorizontal={false} style={{width: width - step1, paddingLeft: this.state.scrollMargin}} horizontal={true}>
                             <View style={{position: 'absolute', width: this.state.scrollWidth, height: 1000, display: 'flex'}}>
                                 {/* <Moving /> */}
                                 { this.state.barData.map((lane, id) => {
                                     return (
                                         <React.Fragment key={lane.id}>
-                                        <DraggableView 
+                                        <DraggableView
                                             id={lane.id}
-                                            x={lane.x} 
-                                            y={lane.y} 
+                                            x={lane.x}
+                                            y={lane.y}
                                             width1={lane.width1}
                                             width2={lane.width2}
                                             marginX={lane.marginX}
@@ -561,11 +576,11 @@ export default class TaskSchedular extends React.Component {
                                         />
                                         {lane.sublanes.map((sublane, iid) => {
                                             return (
-                                                <DraggableView 
+                                                <DraggableView
                                                     key={sublane.id}
                                                     id={sublane.id}
-                                                    x={sublane.x} 
-                                                    y={sublane.y} 
+                                                    x={sublane.x}
+                                                    y={sublane.y}
                                                     width1={sublane.width1}
                                                     width2={sublane.width2}
                                                     marginX={sublane.marginX}
@@ -620,7 +635,7 @@ export default class TaskSchedular extends React.Component {
                         </ScrollView>
                     </DNDBoard>
                 </MainBoard>
-                
+
             </MainContainer>
         )
     }
@@ -709,12 +724,12 @@ const MainItem = styled.View`
     width: ${step1};
 `;
 
-const MainItemTitle = styled.Text`
-    ${mainText}
+const MainItemTitle = styled.View`
+    justify-content: center;
+    height: ${fontSizeLg * 1.5}; 
+    width: ${step2};
     ${borderTop}
     ${borderLeft}
-    font-size: ${fontSizeLg};
-    width: ${step1};
 `;
 
 const BtnGroup = styled.View`
@@ -785,11 +800,12 @@ const CurrentTimeLine = styled.View`
 `;
 
 const MainText = styled.Text`
-    font-size: ${props => props.fontSize ? props.fontSize : fontSizeLg};
+    font-size: ${props => props.fontSize ? props.fontSize : fontSizeMd};
     color: white;
     width: ${props => props.width ? props.width : 'auto'};
     justify-content: center;
     align-items: ${props => props.pos == 'start' ? 'flex-start' : 'center'};
+    
 `;
 
 const MainBtn = styled.Text`
@@ -805,4 +821,13 @@ const MainBtn = styled.Text`
     ${borderRight}
     ${borderBottom}
     ${borderLeft}
+`;
+
+const BarItem = styled.View`
+    ${borderTop}
+    ${borderLeft}
+    
+    width: ${props => props.width ? (props.width - step1) / 10 : '50%'}; 
+    justify-content: center;
+    align-items: center;
 `;
