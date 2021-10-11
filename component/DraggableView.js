@@ -11,7 +11,7 @@ const nearestFloor = (y_height) => {
     return calculated < 0 ? 0 : calculated
 }
 
-const DraggableView = ({id, x, y, width1, width2, color1, color2, marginX, existingData, updateData}) => {
+const DraggableView = ({id, x, y, width1, width2, color1, color2, marginX, existingData, updateData, toggleSliding}) => {
     console.log({ x1: Number.parseFloat(x).toFixed(0), y: y, x2: x.toFixed(0) + width1});
   const pan = useRef(new Animated.ValueXY({x: x, y: y})).current;
   const [startPos, setStartPos] = useState({pan_x0: 0, pan_y0: 0});
@@ -19,7 +19,7 @@ const DraggableView = ({id, x, y, width1, width2, color1, color2, marginX, exist
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderStart: (gesture, gestureState) => {
-        console.log("start")
+        toggleSliding(false);
         setStartPos({
             pan_x0: pan.x._value,
             pan_y0: pan.y._value,
@@ -92,6 +92,7 @@ const DraggableView = ({id, x, y, width1, width2, color1, color2, marginX, exist
             y: nearestFloor(startPos.pan_y0 + gestureState.dy),
             width1: width1,
         });
+        toggleSliding(true);
     },
   });
 

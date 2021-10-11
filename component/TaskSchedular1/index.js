@@ -127,6 +127,7 @@ export default class TaskSchedular extends React.Component {
             barData: [],
             scrollWidth: 1154,
             scrollMargin: 0,
+            sliding: true,
         }
     }
     componentDidMount () {
@@ -519,7 +520,7 @@ export default class TaskSchedular extends React.Component {
                         </DNDGrid>
 
                         <CurrentTimeLine left={currentTimePos}/>
-                        <ScrollView alwaysBounceHorizontal={false} style={{width: width - step1, paddingLeft: this.state.scrollMargin}} horizontal={true}>
+                        <ScrollView alwaysBounceHorizontal={this.state.sliding} style={{width: width - step1, paddingLeft: this.state.scrollMargin}} horizontal={true}>
                             <View style={{position: 'absolute', width: this.state.scrollWidth, height: 1000, display: 'flex'}}>
                                 {/* <Moving /> */}
                                 { this.state.barData.map((lane, id) => {
@@ -573,6 +574,7 @@ export default class TaskSchedular extends React.Component {
                                                     barData: tempBarData
                                                 });
                                             }}
+                                            toggleSliding={(val) => this.setState({sliding: val})}
                                         />
                                         {lane.sublanes.map((sublane, iid) => {
                                             return (
@@ -625,6 +627,7 @@ export default class TaskSchedular extends React.Component {
                                                             barData: tempBarData
                                                         });
                                                     }}
+                                                    toggleSliding={(val) => this.setState({sliding: val})}
                                                 />
                                             )
                                         })}
