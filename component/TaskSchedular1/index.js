@@ -1,95 +1,32 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, Animated, ScrollView, SafeAreaView } from 'react-native';
-import styled from 'styled-components';
+import { css } from 'styled-components';
+import styled from 'styled-components/native';
 
 import DraggableView from '../DraggableView';
-
-import Moving from '../Moving';
 
 const fontSizeLg = 12;
 const fontSizeMd = 9;
 const fontSizeSm = 6;
 
 const paddingLg = 25;
-const paddingMd = 7;
 const paddingSm = 5;
-const marginLg = 10;
-const margingMd = 7;
-const margingSm = 5;
 
 const step1 = 280; // 1/3
 const step2 = 190; // 1/5
 
 const sHeight = 18;
 
-// 1152 px
-const styles = StyleSheet.create({
-    dFlex: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    flexCol: {
-        flexDirection: 'column',
-    },
-    dateBar: {
-        fontSize: fontSizeMd,
-        color: 'white',
-        marginLeft: step1, 
-    },
-    timeBar: {
-        fontSize: fontSizeSm,
-        marginLeft: step2,
-    },
-    timeTitle: {
-        fontSize: fontSizeSm,
-        paddingTop: paddingSm,
-        paddingBottom: paddingSm,
-        paddingLeft: 0,
-        paddingRight: 0,
-        textAlign: 'center',
-    },
-    timePoint: {
-        fontSize: fontSizeSm,
-        paddingTop: paddingSm,
-        paddingBottom: paddingSm,
-        paddingLeft: 0,
-        paddingRight: 0,
-        textAlign: 'center',
-    },
-    borderTopBox: {
-        borderTopColor: 'gray',
-        borderTopWidth: 1,
-        borderStyle: 'solid',
-    },
-    borderLeftBox: {
-        borderLeftColor: 'gray',
-        borderLeftWidth: 1,
-        borderStyle: 'solid',
-    },
-    borderRightBox: {
-        borderRightColor: 'gray',
-        borderRightWidth: 1,
-        borderStyle: 'solid',
-    },
-    borderBottomBox: {
-        borderBottomColor: 'gray',
-        borderBottomWidth: 1,
-        borderStyle: 'solid',
-    },
-    center: {
-        justifyContent: 'center', 
-        alignItems: 'center'
-    },
-    hcenter: {
-        alignItems: 'center'
-    },
-    vcenter: {
-        justifyContent: 'center', 
-    },
-    mainText: {
-        color: 'white',
-    }
-})
+const borderRight_Temp = {
+    borderRightWidth: 1, 
+    borderStyle: 'solid', 
+    borderRightColor: 'gray'
+}
+const borderTop_Temp = {
+    borderTopWidth: 1, 
+    borderStyle: 'solid', 
+    borderTopColor: 'gray'
+}
 
 const currentTimePos = 500
 
@@ -200,7 +137,7 @@ export default class TaskSchedular extends React.Component {
         })
         this.setState({
             scrollWidth: width - step1,
-            scrollMargin: 300,
+            scrollMargin: 0,
         })
         let yPos = -1
         let temp = [...chart.lanes.map((lane, id) => {
@@ -239,370 +176,334 @@ export default class TaskSchedular extends React.Component {
             height
         } = this.state;
         return (
-            <View style={{width: width, height: height, backgroundColor: 'black'}}>
-                <View style={{height: fontSizeLg * 5, marginBottom: 70 - fontSizeLg * 5, justifyContent: 'center'}}>
-                    <Text style={{fontSize: fontSizeLg * 3, color: 'white', marginLeft: 30}}>Let's go Har!</Text>
-                </View>
-                <View style={{position: 'absolute', right: 10, width: 200, height: fontSizeLg * 5, justifyContent: 'center'}}>
-                    <Text style={{fontSize: fontSizeLg*2, color: 'white'}}>Task Manager</Text>
-                </View>
-                <View style={[styles.dateBar, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox]} >
-                    <Text style={styles.mainText}>AUGUST 10.2021 📆</Text>
-                </View>
-                <View style={[styles.timeBar, styles.dFlex]} >
-                    <Text style={[styles.timeTitle, styles.mainText, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox, {width: (step1 - step2) / 2}]}>EST TIME</Text>
-                    <Text style={[styles.timeTitle, styles.mainText, styles.borderTopBox, styles.borderRightBox, {width: (step1 - step2) / 2}]}>ACTUAL TIME</Text>
+            <MainContainer width={width} height={height}>
+                <Header>
+                    <Title>Let's go Har!</Title>
+                </Header>
+                <HeaderButton style={{position: 'absolute', right: 10, width: 200, height: fontSizeLg * 5, justifyContent: 'center'}}>
+                    <MainText fontSize={fontSizeLg*2}>Task Manager</MainText>
+                </HeaderButton>
+                <MonthSelector>
+                    <MainText>AUGUST 10.2021 📆</MainText>
+                </MonthSelector>
+                <TimeLineBar style={{height: 20}}>
+                    <BtnGroup>
+                        <MainText width={'50%'} style={borderRight_Temp}>EST TIME</MainText>
+                        <MainText width={'50%'} style={borderRight_Temp}>ACTUAL TIME</MainText>
+                    </BtnGroup>
                     {/* <View style={style.dFlex}> */}
                         {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map((timePoint, id) => (
-                            <Text style={[styles.timePoint, styles.mainText, styles.borderTopBox, styles.borderRightBox, { width: (width - step1) / 10, fontWeight: ((width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10) ? 'bold' : 'normal'}]} key={timePoint}>{timePoint} AM</Text>
+                            <MainText style={[{ width: (width - step1) / 10 - (id === 9 ? 1 : 0), fontWeight: ((width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10) ? 'bold' : 'normal'}, borderTop_Temp, borderRight_Temp]} key={timePoint}>{timePoint} AM</MainText>
                         ))}
                     {/* </View> */}
-                </View>
-                <View style={styles.dFlex}>
-                    <View style={{width: step1}}>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <Text style={[{fontSize: fontSizeLg, width: step2}, styles.mainText, styles.borderTopBox, styles.borderLeftBox,]}>🔽Preparation</Text>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>90m</Text>
-                                </View>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>93m</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderTopBox, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Cut 23g of cabbage</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>10m</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >END</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Slice 24 onions</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >START</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox, styles.borderRightBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Pool 8 potatoes</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >START</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox, styles.borderRightBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <Text style={[{fontSize: fontSizeLg, width: step2}, styles.mainText, styles.borderTopBox, styles.borderLeftBox,]}>🔽Cooking</Text>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
-                                </View>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderTopBox, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Toast buns</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >START</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Sautee ground beef</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >START</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Apply onions</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >START</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <Text style={[{fontSize: fontSizeLg, width: step2}, styles.mainText, styles.borderTopBox, styles.borderLeftBox,]}>🔽Packaging</Text>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
-                                </View>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderTopBox, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Prepare utensils</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >START</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Apply Stickers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >START</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>🔽Package all burgers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >PRINT</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
+                </TimeLineBar>
+                <MainBoard>
+                    <LeftSidebar>
+                        <MainItem>
+                            <MainItemTitle>🔽Preparation</MainItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainText fontSize={fontSizeSm}>90m</MainText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                    <MainText fontSize={fontSizeSm}>93m</MainText>
+                                </BtnText>
+                            </BtnGroup>
+                        </MainItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Cut 23g of cabbage</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainText fontSize={fontSizeSm}>10m</MainText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                    <MainBtn>END</MainBtn>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Slice 24 onions</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn>START</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Pool 8 potatoes</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn>START</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <MainItem>
+                            <MainItemTitle>🔽Cooking</MainItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </MainItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Toast buns</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn
+                                    >START</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Sautee ground beef</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn
+                                    >START</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Apply onions</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn
+                                    >START</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <MainItem>
+                            <MainItemTitle>🔽Packaging</MainItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </MainItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Prepare utensils</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn
+                                    >START</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Apply Stickers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn
+                                    >START</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}></BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>🔽Package all burgers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn
+                                    >PRINT</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
                         
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <Text style={[{fontSize: fontSizeLg, width: step2}, styles.mainText, styles.borderTopBox, styles.borderLeftBox,]}>🔽Delievery</Text>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
-                                </View>
-                                <View style={[{flexGrow: 1}, styles.center, styles.borderTopBox, styles.borderLeftBox, styles.borderRightBox,]}>
-                                    <Text style={[{fontSize: fontSizeSm}, styles.mainText]}></Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderTopBox, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>🔽John Dingers(3)</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderTopBox, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <MainItem>
+                            <MainItemTitle>🔽Delievery</MainItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </MainItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>🔽John Dingers(3)</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
                         
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>🔽Peter Metro</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg * 2}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>Package all burgers</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={[styles.dFlex, {width: step1}, styles.borderBottomBox]}>
-                            <View style={[styles.vcenter, {height: fontSizeLg*1.5, width: step2, paddingLeft: paddingLg}, styles.borderLeftBox,]}>
-                                <Text style={[{fontSize: fontSizeSm}, styles.mainText]}>🔽Zach Lass</Text>
-                            </View>
-                            <View style={[styles.dFlex, {width: step1 - step2}]}>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderLeftBox,]}>
-                                    <Text
-                                        style={[{paddingTop: 1, paddingBottom: 1, paddingLeft: paddingSm, paddingRight: paddingSm, fontSize: fontSizeSm, borderRadius: 5}, styles.borderTopBox, styles.borderRightBox, styles.borderBottomBox, styles.borderLeftBox, styles.mainText]}
-                                        onPress={() => console.log("--")}
-                                    >START</Text>
-                                </View>
-                                <View style={[{flexGrow: 1, width: '50%'}, styles.center, styles.borderRightBox, styles.borderLeftBox,]}>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={[{width: width - step1, flex: 1, overflow: 'hidden'}, styles.borderBottomBox]}>
-                        <View style={[{position: 'absolute', backgroundColor: 'tranparent', width: width - step1, height: 1000}, styles.borderTopBox, styles.borderRightBox]}>
-                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex,]}>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>🔽Peter Metro</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                        <SubItem style={{borderBottomWidth: 1, borderStyle: 'solid', borderBottomColor: 'gray'}}>
+                            <SubItemTitle>
+                                <MainText fontSize={fontSizeSm} pos={'start'}>🔽Zach Lass</MainText>
+                            </SubItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainBtn
+                                    >START</MainBtn>
+                                </BtnText>
+                                <BtnText style={borderRight_Temp}>
+                                </BtnText>
+                            </BtnGroup>
+                        </SubItem>
+                    </LeftSidebar>
+                    <DNDBoard width={width}>
+                        <DNDGrid width={width}>
+                            <DNDGridRow width={width} height={fontSizeLg * 1.5 - 1}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 4.5}, styles.borderBottomBox, styles.dFlex,]}>
+                            </DNDGridRow>
+                            <DNDGridRow width={width} height={fontSizeLg * 4.5}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 4.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
                                 ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                            </DNDGridRow>
+                            <DNDGridRow width={width} height={fontSizeLg * 1.5 - 1}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 4.5}, styles.borderBottomBox, styles.dFlex]}>
+                            </DNDGridRow>
+                            <DNDGridRow width={width} height={fontSizeLg * 4.5}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 4.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
                                 ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                            </DNDGridRow>
+                            <DNDGridRow width={width} height={fontSizeLg * 1.5 - 1}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 9}, styles.borderBottomBox, styles.dFlex]}>
+                            </DNDGridRow>
+                            <DNDGridRow width={width} height={fontSizeLg * 9}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 9, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 9 - 1}></DNDGRIDCol>
                                 ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 1.5 - 1}, styles.borderBottomBox, styles.dFlex]}>
+                            </DNDGridRow>
+                            <DNDGridRow width={width} height={fontSizeLg * 1.5 - 1}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 1.5 - 1, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
-                            </View>
-                            <View style={[{width: width - step1, height: fontSizeLg * 10.5}, styles.dFlex]}>
+                            </DNDGridRow>
+                            <DNDGridRow width={width} height={fontSizeLg * 10.5}>
                                 {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
-                                    <View key={timePoint} style={[{height: fontSizeLg * 10.5, width: (width - step1) / 10}, styles.borderRightBox]}></View>
+                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 10.5 - 1}></DNDGRIDCol>
                                 ))}
-                            </View>
+                            </DNDGridRow>
                             
-                        </View>
+                        </DNDGrid>
                         
-                        <View style={{position: 'absolute', width: 3, backgroundColor: 'green', height:2000, left: currentTimePos,}}></View>
+                        <CurrentTimeLine left={currentTimePos}></CurrentTimeLine>
                         <ScrollView style={{width: width - step1, paddingLeft: this.state.scrollMargin}} horizontal={true}>
                             <View style={{position: 'absolute', width: this.state.scrollWidth, height: 1000, display: 'flex'}}>
                                 {/* <Moving /> */}
@@ -717,10 +618,192 @@ export default class TaskSchedular extends React.Component {
                                 }) }
                             </View>
                         </ScrollView>
-                    </View>
-                </View>
+                    </DNDBoard>
+                </MainBoard>
                 
-            </View>
+            </MainContainer>
         )
     }
 }
+
+const MainContainer = styled.View`
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
+    background-color: black;
+`;
+
+const Header = styled.View`
+    height: ${fontSizeLg * 5};
+    justifyContent: center;
+    margin-bottom: ${70 - fontSizeLg * 5};
+`;
+
+const Title = styled.Text`
+    font-size: ${fontSizeLg * 3};
+    color: white;
+    margin-left: 30;
+`;
+
+const HeaderButton = styled.View`
+    position: absolute;
+    right: 10;
+    width: 200;
+    height: fontSizeLg * 5;
+    justify-content: center;
+`;
+
+const borderTop = css`
+    border-top-color: gray;
+    border-top-width: 1;
+    border-style: solid;
+`;
+
+const borderLeft = css`
+    border-left-color: gray;
+    border-left-width: 1;
+    border-style: solid;
+`;
+const borderRight = css`
+    border-right-color: gray;
+    border-right-width: 1;
+    border-style: solid;
+`;
+const borderBottom = css`
+    border-bottom-color: gray;
+    border-bottom-width: 1;
+    border-style: solid;
+`;
+const mainText = css`
+    color: white;
+`;
+
+const MonthSelector = styled.View`
+    fontSize: ${fontSizeMd};
+    color: white;
+    margin-left: ${step1};
+    box-sizing: border-box;
+    ${borderLeft}
+    ${borderTop}
+    ${borderRight}
+`;
+
+const TimeLineBar = styled.View`
+    display: flex;
+    flex-direction: row;
+    font-size: ${fontSizeSm};
+    margin-left: ${step2};
+    ${borderLeft}
+`;
+
+const MainBoard = styled.View`
+    display: flex;
+    flex-direction: row;
+`;
+
+const LeftSidebar = styled.View`
+    width: ${step1}
+`;
+
+const MainItem = styled.View`
+    display: flex;
+    flex-direction: row;
+    width: ${step1};
+`;
+
+const MainItemTitle = styled.Text`
+    ${mainText}
+    ${borderTop}
+    ${borderLeft}
+    font-size: ${fontSizeLg};
+    width: ${step1};
+`;
+
+const BtnGroup = styled.View`
+    display: flex;
+    flex-direction: row;
+    width: ${step1 - step2};
+    ${borderTop}
+`;
+
+const BtnText = styled.View`
+    flex-grow: 1;
+    width: 50%;
+    ${borderLeft}
+    justify-content: center;
+    align-items: center;
+`;
+
+const SubItem = styled.View`
+    display: flex;
+    flex-direction: row;
+    width: ${step1};
+`;
+
+const SubItemTitle = styled.View`
+    justify-content: center;
+    height: ${fontSizeLg*1.5}; 
+    width: ${step2}; 
+    padding-left: ${paddingLg}; 
+    ${borderTop}
+    ${borderLeft}
+`;
+
+const DNDBoard = styled.View`
+    width: ${props => props.width - step1};
+    overflow: hidden;
+    ${borderBottom}
+`;
+
+const DNDGrid = styled.View`
+    position: absolute; 
+    background-color: tranparent; 
+    width: ${props => props.width - step1}; 
+    height: 1000;
+    ${borderTop}
+    ${borderRight}
+`;
+
+const DNDGridRow = styled.View`
+    width: ${props => props.width - step1}; 
+    height: ${(props) => props.height}; 
+    display: flex;
+    flexDirection: row;
+    ${borderBottom}
+`;
+
+const DNDGRIDCol = styled.View`
+    height: ${props => props.height}; 
+    width: ${props => (props.width - step1) / 10}; 
+    ${borderRight}
+`;
+
+const CurrentTimeLine = styled.View`
+    position: absolute; 
+    width: 3; 
+    background-color: green; 
+    height:2000;
+    left: ${props => props.left}
+`;
+
+const MainText = styled.View`
+    font-size: ${props => props.fontSize};
+    color: white;
+    width: ${props => props.width ? props.width : 'auto'};
+    justify-content: center;
+    align-items: ${props => props.pos == 'start' ? 'start' : 'center'};
+`;
+
+const MainBtn = styled.View`
+    color: white;
+    border-radius: 5;
+    padding-top: 1; 
+    padding-bottom: 1; 
+    padding-left: ${paddingSm}; 
+    padding-right: ${paddingSm}; 
+    font-size: ${fontSizeSm};
+    borderRadius: 5;
+    ${borderTop}
+    ${borderRight}
+    ${borderBottom}
+    ${borderLeft}
+`;
