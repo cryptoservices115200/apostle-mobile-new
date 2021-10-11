@@ -785,7 +785,7 @@ const CurrentTimeLine = styled.View`
     left: ${props => props.left}
 `;
 
-const MainText = styled.View`
+const MainText = styled.Text`
     font-size: ${props => props.fontSize};
     color: white;
     width: ${props => props.width ? props.width : 'auto'};
@@ -793,7 +793,7 @@ const MainText = styled.View`
     align-items: ${props => props.pos == 'start' ? 'start' : 'center'};
 `;
 
-const MainBtn = styled.View`
+const MainBtn = styled.Text`
     color: white;
     border-radius: 5;
     padding-top: 1; 
