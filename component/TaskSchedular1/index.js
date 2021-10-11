@@ -1,11 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, Animated, ScrollView, SafeAreaView } from 'react-native';
+import styled from 'styled-components';
 
-// import Draggable from 'react-native-draggable';
-
-// import HChart from './HChart';
-
-// import GridView from './GridView';
 import DraggableView from '../DraggableView';
 
 import Moving from '../Moving';
