@@ -629,7 +629,7 @@ export default class TaskSchedular extends React.Component {
 const MainContainer = styled.View`
     width: ${(props) => props.width};
     height: ${(props) => props.height};
-    background-color: black;
+    background-color: #000000;
 `;
 
 const Header = styled.View`
@@ -756,7 +756,7 @@ const DNDBoard = styled.View`
 
 const DNDGrid = styled.View`
     position: absolute; 
-    background-color: 'rgba(0,0,0,0)'; 
+    background-color: #00000000; 
     width: ${props => props.width - step1}; 
     height: 1000;
     ${borderTop}
@@ -780,7 +780,7 @@ const DNDGRIDCol = styled.View`
 const CurrentTimeLine = styled.View`
     position: absolute; 
     width: 3; 
-    background-color: green; 
+    background-color: #00FF00; 
     height:2000;
     left: ${props => props.left}
 `;
