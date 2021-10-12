@@ -22,11 +22,11 @@ const Btn = ({left, top, setHPos, LEFTBTN}) => {
                 alignItems: 'center'
             }}
             onPress={() => {
-                setHPos(LEFTBTN ? -10 : 10)
+                setHPos(LEFTBTN ? 10 : -10)
             }}
             onLongPress={() => {
                 timer = setInterval(() => {
-                    setHPos(LEFTBTN ? -10 : 10)
+                    setHPos(LEFTBTN ? 10 : -10)
                 }, 100)
             }}
             onPressOut={() => {
