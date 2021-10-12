@@ -12,7 +12,6 @@ const nearestFloor = (y_height) => {
 }
 
 const DraggableView = ({id, x, y, width1, width2, color1, color2, marginX, existingData, updateData, toggleSliding}) => {
-    console.log({ x1: Number.parseFloat(x).toFixed(0), y: y, x2: x.toFixed(0) + width1});
   const pan = useRef(new Animated.ValueXY({x: x, y: y})).current;
   const [startPos, setStartPos] = useState({pan_x0: 0, pan_y0: 0});
   const [pressed, setPressed] = useState(false);

@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Animated, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Animated, ScrollView, SafeAreaView, PanResponder } from 'react-native';
 import { css } from 'styled-components';
 import styled from 'styled-components/native';
 
 import DraggableView from '../DraggableView';
+import Btn from "../Btn";
 
 const fontSizeLg = 12;
 const fontSizeMd = 9;
@@ -118,6 +119,8 @@ var chart = {
     ]
   }
 
+let leftTimer = null;
+let righttTimer = null;
 export default class TaskSchedular extends React.Component {
     constructor(props) {
         super(props);
@@ -172,6 +175,8 @@ export default class TaskSchedular extends React.Component {
         this.setState({
             barData: temp
         })
+
+        
     }
     render() {
         let {
@@ -639,16 +644,38 @@ export default class TaskSchedular extends React.Component {
                                 }) }
                             </View>
                         {/* </ScrollView> */}
-                        <ViewBtn left={40} top={350} onPress={() => {
+                        <Btn 
+                            left={40} 
+                            top={350} 
+                            LEFTBTN={true}
+                            setHPos={(val) => 
+                                this.setState((state) => ({hPos: state.hPos + val}))
+                            }
+                        />
+                        <Btn 
+                            left={width -step1 - 80} 
+                            top={350} 
+                            LEFTBTN={false}
+                            setHPos={(val) => 
+                                this.setState((state) => ({hPos: state.hPos + val}))
+                            }
+                        />
+                        {/* <ViewBtn left={40} top={350} onPress={() => {
                             this.setState((state) => ({hPos: state.hPos + 10}))
+                        }} 
+                        onLongPress={() => {
+                            if (!leftTimer) {
+                                leftTimer = setInterval(() => {
+                                    this.setState((state) => ({hPos: state.hPos + 10}))
+                                }, 500);
+                            }
+                        }} onPressOut={() => {
+                            if (leftTimer) {
+                                clearInterval(leftTimer)
+                            }
                         }}>
                             <Text>{'<'}</Text>
-                        </ViewBtn>
-                        <ViewBtn left={width -step1 - 80} top={350} onPress={() => {
-                            this.setState((state) => ({hPos: state.hPos - 10}))
-                        }}>
-                            <Text>{'>'}</Text>
-                        </ViewBtn>
+                        </ViewBtn> */}
                     </DNDBoard>
                 </MainBoard>
 
