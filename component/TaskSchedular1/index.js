@@ -128,6 +128,7 @@ export default class TaskSchedular extends React.Component {
             scrollWidth: 1154,
             scrollMargin: 0,
             sliding: true,
+            hPos: 0,
         }
     }
     componentDidMount () {
@@ -520,8 +521,10 @@ export default class TaskSchedular extends React.Component {
                         </DNDGrid>
 
                         <CurrentTimeLine left={currentTimePos}/>
-                        <ScrollView alwaysBounceHorizontal={this.state.sliding} style={{width: width - step1, paddingLeft: this.state.scrollMargin}} horizontal={true}>
-                            <View style={{position: 'absolute', width: this.state.scrollWidth, height: 1000, display: 'flex'}}>
+                        {/* <ScrollView 
+                            alwaysBounceHorizontal={false} 
+                            style={{width: width - step1, paddingLeft: this.state.scrollMargin}} horizontal={true}> */}
+                            <View style={{position: 'absolute', marginLeft: this.state.hPos, width: width, height: 1000, display: 'flex'}}>
                                 {/* <Moving /> */}
                                 { this.state.barData.map((lane, id) => {
                                     return (
@@ -635,7 +638,17 @@ export default class TaskSchedular extends React.Component {
                                     )
                                 }) }
                             </View>
-                        </ScrollView>
+                        {/* </ScrollView> */}
+                        <ViewBtn left={40} top={350} onPress={() => {
+                            this.setState((state) => ({hPos: state.hPos - 10}))
+                        }}>
+                            <Text>{'<'}</Text>
+                        </ViewBtn>
+                        <ViewBtn left={width -step1 - 80} top={350} onPress={() => {
+                            this.setState((state) => ({hPos: state.hPos + 10}))
+                        }}>
+                            <Text>{'>'}</Text>
+                        </ViewBtn>
                     </DNDBoard>
                 </MainBoard>
 
@@ -833,4 +846,16 @@ const BarItem = styled.View`
     width: ${props => props.width ? (props.width - step1) / 10 : '50%'}; 
     justify-content: center;
     align-items: center;
+`;
+
+const ViewBtn = styled.TouchableOpacity`
+    left: ${props => props.left}
+    top: ${props => props.top}
+    position: absolute;
+    width: 40;
+    height: 40;
+    border-radius: 1000;
+    border-width: 1;
+    border-style: solid;
+    border-color: gray;
 `;
