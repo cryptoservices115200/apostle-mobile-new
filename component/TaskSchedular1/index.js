@@ -640,12 +640,12 @@ export default class TaskSchedular extends React.Component {
                             </View>
                         {/* </ScrollView> */}
                         <ViewBtn left={40} top={350} onPress={() => {
-                            this.setState((state) => ({hPos: state.hPos - 10}))
+                            this.setState((state) => ({hPos: state.hPos + 10}))
                         }}>
                             <Text>{'<'}</Text>
                         </ViewBtn>
                         <ViewBtn left={width -step1 - 80} top={350} onPress={() => {
-                            this.setState((state) => ({hPos: state.hPos + 10}))
+                            this.setState((state) => ({hPos: state.hPos - 10}))
                         }}>
                             <Text>{'>'}</Text>
                         </ViewBtn>
