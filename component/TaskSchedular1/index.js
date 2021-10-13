@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { StyleSheet, Text, View, Dimensions, Animated, ScrollView, SafeAreaView, PanResponder } from 'react-native';
 import { css } from 'styled-components';
 import styled from 'styled-components/native';
@@ -119,35 +119,26 @@ var chart = {
     ]
   }
 
-const end = 48;
+const end = 96;
 let timeStep = []
 for (let i = 0; i < end; i ++) {
     timeStep.push(i * 0.5)
 }
 
-export default class TaskSchedular extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            width: 1154,
-            height: 1000,
-            barData: [],
-            scrollWidth: 1154,
-            scrollMargin: 0,
-            sliding: true,
-            hPos: 0,
-        }
-    }
-    componentDidMount () {
-        let width = Dimensions.get('window').width;
-        this.setState({
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
-        })
-        this.setState({
-            scrollWidth: width - step1,
-            scrollMargin: 0,
-        })
+export default function TaskSchedular () {
+    const [width, setWidth] = useState(1154)
+    const [height, setHeight] = useState(1000)
+    const [barData, setBarData] = useState([])
+    const [scrollWidth, setScrollWidth] = useState(1154)
+    const [scrollMargin, setScrollMargin] = useState(0)
+    const [sliding, setSliding] = useState(true)
+    const [hPos, setHPos] = useState(0)
+    useEffect(() => {
+        let width1 = Dimensions.get('window').width;
+        setWidth(width1)
+        setHeight(Dimensions.get('window').height)
+        setScrollWidth(width - step1)
+        setScrollMargin(0)
         let yPos = -1
         let temp = [...chart.lanes.map((lane, id) => {
             yPos ++;
@@ -175,555 +166,549 @@ export default class TaskSchedular extends React.Component {
                 })
             })
         })]
-        this.setState({
-            barData: temp
-        })
+
+        setBarData(temp)
         console.log(currentTimePos * (width - step1) / 5)
-        this.setState({
-            hPos: ((currentTimePos) * (width - step1) / 5 * -1 + (width - step1) / 2)
-        })
-        
-    }
-    render() {
-        let {
-            width,
-            height
-        } = this.state;
-        return (
-            <MainContainer width={width} height={height}>
-                <Header>
-                    <Title>Let's go Har!</Title>
-                </Header>
-                <HeaderButton style={{position: 'absolute', right: 10, width: 200, height: fontSizeLg * 5, justifyContent: 'center'}}>
-                    <MainText fontSize={fontSizeLg*2}>Task Manager</MainText>
-                </HeaderButton>
-                <MonthSelector>
-                    <MainText >AUGUST 10.2021 📆</MainText>
-                </MonthSelector>
-                <MainBoard>
-                    <LeftSidebar>
-                        <MainItem style={{height: fontSizeLg * 1.5}}>
-                            <MainItemTitle>
-                            </MainItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainText fontSize={fontSizeMd} >EST TIME</MainText>
-                                </BtnText>
-                                <BtnText style={{borderRightWidth: 1, borderRightColor: 'gray', borderRightStyle: 'solid'}}>
-                                    <MainText fontSize={fontSizeMd} >ACTUAL TIME</MainText>
-                                </BtnText>
-                            </BtnGroup>
-                        </MainItem>
-                        <MainItem>
-                            <MainItemTitle>
-                              <MainText fontSize={fontSizeLg} pos={'start'}>🔽Preparation</MainText>
-                            </MainItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainText fontSize={fontSizeSm}>90m</MainText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                    <MainText fontSize={fontSizeSm}>93m</MainText>
-                                </BtnText>
-                            </BtnGroup>
-                        </MainItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Cut 23g of cabbage</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainText fontSize={fontSizeSm}>10m</MainText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                    <MainBtn>END</MainBtn>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Slice 24 onions</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn>START</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Pool 8 potatoes</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn>START</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <MainItem>
-                            <MainItemTitle>
-                              <MainText fontSize={fontSizeLg} pos={'start'}>🔽Cooking</MainText>
-                            </MainItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
-                            </BtnGroup>
-                        </MainItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Toast buns</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn
-                                    >START</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Sautee ground beef</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn
-                                    >START</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Apply onions</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn
-                                    >START</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}/>
-                            </BtnGroup>
-                        </SubItem>
-                        <MainItem>
-                            <MainItemTitle>
-                              <MainText fontSize={fontSizeLg} pos={'start'}>🔽Packaging</MainText>
-                            </MainItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
-                            </BtnGroup>
-                        </MainItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Prepare utensils</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn
-                                    >START</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Apply Stickers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn
-                                    >START</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}></BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>🔽Package all burgers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn
-                                    >PRINT</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
+        setHPos(((currentTimePos) * (width - step1) / 5 * -1 + (width - step1) / 2))
+    }, []);
+    return (
+        <MainContainer width={width} height={height}>
+            <Header>
+                <Title>Let's go Har!</Title>
+            </Header>
+            <HeaderButton style={{position: 'absolute', right: 10, width: 200, height: fontSizeLg * 5, justifyContent: 'center'}}>
+                <MainText fontSize={fontSizeLg*2}>Task Manager</MainText>
+            </HeaderButton>
+            <MonthSelector>
+                <MainText >AUGUST 10.2021 📆</MainText>
+            </MonthSelector>
+            <MainBoard>
+                <LeftSidebar>
+                    <MainItem style={{height: fontSizeLg * 1.5}}>
+                        <MainItemTitle>
+                        </MainItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainText fontSize={fontSizeMd} >EST TIME</MainText>
+                            </BtnText>
+                            <BtnText style={{borderRightWidth: 1, borderRightColor: 'gray', borderRightStyle: 'solid'}}>
+                                <MainText fontSize={fontSizeMd} >ACTUAL TIME</MainText>
+                            </BtnText>
+                        </BtnGroup>
+                    </MainItem>
+                    <MainItem>
+                        <MainItemTitle>
+                          <MainText fontSize={fontSizeLg} pos={'start'}>🔽Preparation</MainText>
+                        </MainItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainText fontSize={fontSizeSm}>90m</MainText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                                <MainText fontSize={fontSizeSm}>93m</MainText>
+                            </BtnText>
+                        </BtnGroup>
+                    </MainItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Cut 23g of cabbage</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainText fontSize={fontSizeSm}>10m</MainText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                                <MainBtn>END</MainBtn>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Slice 24 onions</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn>START</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}></BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Pool 8 potatoes</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn>START</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}></BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <MainItem>
+                        <MainItemTitle>
+                          <MainText fontSize={fontSizeLg} pos={'start'}>🔽Cooking</MainText>
+                        </MainItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}></BtnText>
+                        </BtnGroup>
+                    </MainItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Toast buns</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn
+                                >START</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}></BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Sautee ground beef</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn
+                                >START</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}></BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Apply onions</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn
+                                >START</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}/>
+                        </BtnGroup>
+                    </SubItem>
+                    <MainItem>
+                        <MainItemTitle>
+                          <MainText fontSize={fontSizeLg} pos={'start'}>🔽Packaging</MainText>
+                        </MainItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}></BtnText>
+                        </BtnGroup>
+                    </MainItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Prepare utensils</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn
+                                >START</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}></BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Apply Stickers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn
+                                >START</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}></BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>🔽Package all burgers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn
+                                >PRINT</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
 
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <MainItem>
-                            <MainItemTitle>
-                              <MainText fontSize={fontSizeLg} pos={'start'}>🔽Delievery</MainText>
-                            </MainItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </MainItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>🔽John Dingers(3)</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <MainItem>
+                        <MainItemTitle>
+                          <MainText fontSize={fontSizeLg} pos={'start'}>🔽Delievery</MainText>
+                        </MainItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </MainItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>🔽John Dingers(3)</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
 
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>🔽Peter Metro</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                        <SubItem style={{borderBottomWidth: 1, borderStyle: 'solid', borderBottomColor: 'gray'}}>
-                            <SubItemTitle>
-                                <MainText fontSize={fontSizeSm} pos={'start'}>🔽Zach Lass</MainText>
-                            </SubItemTitle>
-                            <BtnGroup>
-                                <BtnText>
-                                    <MainBtn
-                                    >START</MainBtn>
-                                </BtnText>
-                                <BtnText style={borderRight_Temp}>
-                                </BtnText>
-                            </BtnGroup>
-                        </SubItem>
-                    </LeftSidebar>
-                    <DNDBoard width={width}>
-                        <DNDGrid style={{ marginLeft: this.state.hPos,}}>
-                            <DNDGridRow width={width} height={ fontSizeLg * 1.5 - 1 }>
-                            {/* <View style={style.dFlex}> */}
-                                {timeStep.map((timePoint, id) => (
-                                <BarItem width={width - 2} style={id == 9 ? {borderRightWidth: 1, borderRightColor: 'gray', borderStyle: 'solid'} : {}}>
-                                    <MainText style={[{fontWeight: ((width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10) ? 'bold' : 'normal'}]} key={timePoint}>
-                                        {`${Math.floor(timePoint) > 12 ? Math.floor(timePoint) - 12 : Math.floor(timePoint) }:${(timePoint - Math.floor(timePoint)) * 60}`} {Math.floor(timePoint) > 12 ? 'PM' : 'AM'}
-                                    </MainText>
-                                </BarItem>
-                                ))}
-                            {/* </View> */}
-                            </DNDGridRow>
-                        </DNDGrid>
-                        <DNDGrid width={width} style={{marginTop: fontSizeLg * 1.5, marginLeft: this.state.hPos,}}>
-                            <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
-                                {timeStep.map(timePoint => (
-                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
-                                ))}
-                            </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 4.5}>
-                                {timeStep.map(timePoint => (
-                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
-                                ))}
-                            </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 1.5 +1}>
-                                {timeStep.map(timePoint => (
-                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
-                                ))}
-                            </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 4.5}>
-                                {timeStep.map(timePoint => (
-                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
-                                ))}
-                            </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
-                                {timeStep.map(timePoint => (
-                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
-                                ))}
-                            </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 9}>
-                                {timeStep.map(timePoint => (
-                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 9 - 1}></DNDGRIDCol>
-                                ))}
-                            </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
-                                {timeStep.map(timePoint => (
-                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
-                                ))}
-                            </DNDGridRow>
-                            <DNDGridRow width={width} height={fontSizeLg * 10.5 + 1}>
-                                {timeStep.map(timePoint => (
-                                    <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 10.5 - 1}></DNDGRIDCol>
-                                ))}
-                            </DNDGridRow>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>🔽Peter Metro</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                    <SubItem style={{borderBottomWidth: 1, borderStyle: 'solid', borderBottomColor: 'gray'}}>
+                        <SubItemTitle>
+                            <MainText fontSize={fontSizeSm} pos={'start'}>🔽Zach Lass</MainText>
+                        </SubItemTitle>
+                        <BtnGroup>
+                            <BtnText>
+                                <MainBtn
+                                >START</MainBtn>
+                            </BtnText>
+                            <BtnText style={borderRight_Temp}>
+                            </BtnText>
+                        </BtnGroup>
+                    </SubItem>
+                </LeftSidebar>
+                <DNDBoard width={width}>
+                    <DNDGrid width={width} style={{ marginLeft: hPos,}}>
+                        <DNDGridRow width={width} height={ fontSizeLg * 1.5 - 1 }>
+                        {/* <View style={style.dFlex}> */}
+                            {timeStep.map((timePoint, id) => (
+                            <BarItem
+                              width={width}
+                              //style={id == 23 ? {borderRightWidth: 1, borderRightColor: 'gray', borderStyle: 'solid'} : {}}
+                            >
+                                <MainText style={[{fontWeight: ((width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10) ? 'bold' : 'normal'}]} key={timePoint}>
+                                    {
+                                        `${Math.floor(timePoint) > 12 ?
+                                          (
+                                            (Math.floor(timePoint)) % 12 > 0 ?
+                                              (Math.floor(timePoint)) % 12 : 12
+                                          ) :
+                                          (Math.floor(timePoint) > 0 ? Math.floor(timePoint) : 12)
+                                        }:${
+                                            (timePoint - Math.floor(timePoint)) * 60 > 10 ?
+                                              (timePoint - Math.floor(timePoint)) * 60 :
+                                              '0' + (timePoint - Math.floor(timePoint)) * 60
+                                        }`
+                                    } {Math.floor(Math.floor(timePoint) / 12)%2 == 1 ? 'PM' : 'AM'}
+                                </MainText>
+                            </BarItem>
+                            ))}
+                        {/* </View> */}
+                        </DNDGridRow>
+                    </DNDGrid>
+                    <DNDGrid width={width} style={{marginTop: fontSizeLg * 1.5, marginLeft: hPos,}}>
+                        <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
+                            {timeStep.map(timePoint => (
+                                <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
+                            ))}
+                        </DNDGridRow>
+                        <DNDGridRow width={width} height={fontSizeLg * 4.5}>
+                            {timeStep.map(timePoint => (
+                                <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
+                            ))}
+                        </DNDGridRow>
+                        <DNDGridRow width={width} height={fontSizeLg * 1.5 +1}>
+                            {timeStep.map(timePoint => (
+                                <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
+                            ))}
+                        </DNDGridRow>
+                        <DNDGridRow width={width} height={fontSizeLg * 4.5}>
+                            {timeStep.map(timePoint => (
+                                <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
+                            ))}
+                        </DNDGridRow>
+                        <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
+                            {timeStep.map(timePoint => (
+                                <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
+                            ))}
+                        </DNDGridRow>
+                        <DNDGridRow width={width} height={fontSizeLg * 9}>
+                            {timeStep.map(timePoint => (
+                                <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 9 - 1}></DNDGRIDCol>
+                            ))}
+                        </DNDGridRow>
+                        <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
+                            {timeStep.map(timePoint => (
+                                <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
+                            ))}
+                        </DNDGridRow>
+                        <DNDGridRow width={width} height={fontSizeLg * 10.5 + 1}>
+                            {timeStep.map(timePoint => (
+                                <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 10.5 - 1}></DNDGRIDCol>
+                            ))}
+                        </DNDGridRow>
 
-                        </DNDGrid>
+                    </DNDGrid>
 
-                        <CurrentTimeLine left={currentTimePos * ((width - step1) / 5)} style={{ marginLeft: this.state.hPos,}}/>
-                        
-                        <View style={{position: 'absolute', marginLeft: this.state.hPos, marginTop: fontSizeLg * 1.5, width: width, height: 1000, display: 'flex'}}>
-                            {/* <Moving /> */}
-                            { this.state.barData.map((lane, id) => {
-                                return (
-                                    <React.Fragment key={lane.id}>
-                                    <DraggableView
-                                        id={lane.id}
-                                        x={lane.x}
-                                        y={lane.y}
-                                        width1={lane.width1}
-                                        width2={lane.width2}
-                                        marginX={lane.marginX}
-                                        color1={lane.color1}
-                                        color2={lane.color2}
-                                        existingData={this.state.barData}
-                                        updateData={(data) => {
-                                            if ((data.x + data.width1) > this.state.scrollWidth) {
-                                                this.setState({
-                                                    scrollWidth: data.x + data.width1
-                                                });
-                                            }
-                                            if (data.x < (this.state.scrollMargin * -1)) {
-                                                console.log(data.x, '<', this.state.scrollMargin);
-                                                this.setState({
-                                                    scrollMargin: (data.x) * -1
-                                                });
-                                            }
-                                            let tempBarData = this.state.barData.map(sBarData => {
-                                                if (sBarData.id == data.id) {
-                                                    return ({
-                                                        ...sBarData,
-                                                        x: data.x,
-                                                        y: data.y
-                                                    })
-                                                }
+                    <CurrentTimeLine left={currentTimePos * ((width - step1) / 5)} style={{ marginLeft: hPos,}}/>
+
+                    <View style={{position: 'absolute', marginLeft: hPos, marginTop: fontSizeLg * 1.5, width: width, height: 1000, display: 'flex'}}>
+                        {/* <Moving /> */}
+                        { barData.map((lane, id) => {
+                            return (
+                                <React.Fragment key={lane.id}>
+                                <DraggableView
+                                    id={lane.id}
+                                    x={lane.x}
+                                    y={lane.y}
+                                    width1={lane.width1}
+                                    width2={lane.width2}
+                                    marginX={lane.marginX}
+                                    color1={lane.color1}
+                                    color2={lane.color2}
+                                    existingData={barData}
+                                    updateData={(data) => {
+                                        if ((data.x + data.width1) > scrollWidth) {
+                                          setScrollWidth(data.x + data.width1)
+                                        }
+                                        if (data.x < (scrollMargin * -1)) {
+                                            console.log(data.x, '<', scrollMargin);
+                                            setScrollMargin(data.x * -1);
+                                        }
+                                        let tempBarData = barData.map(sBarData => {
+                                            if (sBarData.id == data.id) {
                                                 return ({
                                                     ...sBarData,
-                                                    sublanes: sBarData.sublanes.map(sublane => {
-                                                        if (sublane.id == data.id) {
-                                                            return ({
-                                                                ...sublane,
-                                                                x: data.x,
-                                                                y: data.y
-                                                            })
-                                                        }
-                                                        return sublane
-                                                    })
+                                                    x: data.x,
+                                                    y: data.y
                                                 })
-                                            });
-                                            this.setState({
-                                                barData: tempBarData
-                                            });
-                                        }}
-                                        toggleSliding={(val) => this.setState({sliding: val})}
-                                    />
-                                    {lane.sublanes.map((sublane, iid) => {
-                                        return (
-                                            <DraggableView
-                                                key={sublane.id}
-                                                id={sublane.id}
-                                                x={sublane.x}
-                                                y={sublane.y}
-                                                width1={sublane.width1}
-                                                width2={sublane.width2}
-                                                marginX={sublane.marginX}
-                                                color1={sublane.color1}
-                                                color2={sublane.color2}
-                                                existingData={this.state.barData}
-                                                updateData={(data) => {
-                                                    if ((data.x + data.width1) > this.state.scrollWidth) {
-                                                        this.setState({
-                                                            scrollWidth: data.x + data.width1
-                                                        });
+                                            }
+                                            return ({
+                                                ...sBarData,
+                                                sublanes: sBarData.sublanes.map(sublane => {
+                                                    if (sublane.id == data.id) {
+                                                        return ({
+                                                            ...sublane,
+                                                            x: data.x,
+                                                            y: data.y
+                                                        })
                                                     }
-                                                    if (data.x < (this.state.scrollMargin * -1)) {
-                                                        console.log(data.x, '<', this.state.scrollMargin);
-                                                        this.setState({
-                                                            scrollMargin: (data.x) * -1
-                                                        });
-                                                    }
-                                                    let tempBarData = this.state.barData.map(sBarData => {
-                                                        if (sBarData.id == data.id) {
-                                                            return ({
-                                                                ...sBarData,
-                                                                x: data.x,
-                                                                y: data.y
-                                                            })
-                                                        }
+                                                    return sublane
+                                                })
+                                            })
+                                        });
+                                        setBarData(tempBarData);
+                                    }}
+                                    toggleSliding={(val) => setSliding(val)}
+                                />
+                                {lane.sublanes.map((sublane, iid) => {
+                                    return (
+                                        <DraggableView
+                                            key={sublane.id}
+                                            id={sublane.id}
+                                            x={sublane.x}
+                                            y={sublane.y}
+                                            width1={sublane.width1}
+                                            width2={sublane.width2}
+                                            marginX={sublane.marginX}
+                                            color1={sublane.color1}
+                                            color2={sublane.color2}
+                                            existingData={barData}
+                                            updateData={(data) => {
+                                                if ((data.x + data.width1) > scrollWidth) {
+                                                    setScrollWidth(data.x + data.width1);
+                                                }
+                                                if (data.x < (scrollMargin * -1)) {
+                                                    console.log(data.x, '<', scrollMargin);
+                                                    setScrollMargin((data.x) * -1);
+                                                }
+                                                let tempBarData = barData.map(sBarData => {
+                                                    if (sBarData.id == data.id) {
                                                         return ({
                                                             ...sBarData,
-                                                            sublanes: sBarData.sublanes.map(sublane => {
-                                                                if (sublane.id == data.id) {
-                                                                    return ({
-                                                                        ...sublane,
-                                                                        x: data.x,
-                                                                        y: data.y
-                                                                    })
-                                                                }
-                                                                return sublane
-                                                            })
+                                                            x: data.x,
+                                                            y: data.y
+                                                        })
+                                                    }
+                                                    return ({
+                                                        ...sBarData,
+                                                        sublanes: sBarData.sublanes.map(sublane => {
+                                                            if (sublane.id == data.id) {
+                                                                return ({
+                                                                    ...sublane,
+                                                                    x: data.x,
+                                                                    y: data.y
+                                                                })
+                                                            }
+                                                            return sublane
                                                         })
                                                     })
-                                                    this.setState({
-                                                        barData: tempBarData
-                                                    });
-                                                }}
-                                                toggleSliding={(val) => this.setState({sliding: val})}
-                                            />
-                                        )
-                                    })}
-                                    </React.Fragment>
-                                )
-                            }) }
-                        </View>
-                    </DNDBoard>
-                    <Btn 
-                        left={40 + step1} 
-                        top={350} 
-                        LEFTBTN={true}
-                        setHPos={(val) => 
-                            this.setState((state) => ({hPos: state.hPos + val}))
-                        }
-                    />
-                    <Btn 
-                        left={width - 80} 
-                        top={350} 
-                        LEFTBTN={false}
-                        setHPos={(val) => 
-                            this.setState((state) => ({hPos: state.hPos + val}))
-                        }
-                    />
-                </MainBoard>
+                                                })
+                                                setBarData(tempBarData);
+                                            }}
+                                            toggleSliding={(val) => setSliding(val)}
+                                        />
+                                    )
+                                })}
+                                </React.Fragment>
+                            )
+                        }) }
+                    </View>
+                </DNDBoard>
+                <Btn
+                    left={40 + step1}
+                    top={350}
+                    LEFTBTN={true}
+                    setHPos={(val) =>
+                        setHPos((old_one) => old_one + val)
+                    }
+                />
+                <Btn
+                    left={width - 80}
+                    top={350}
+                    LEFTBTN={false}
+                    setHPos={(val) =>
+                        setHPos((old_one) => old_one + val)
+                    }
+                />
+            </MainBoard>
 
-            </MainContainer>
-        )
-    }
+        </MainContainer>
+    )
+
 }
 
 const MainContainer = styled.View`
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
+    width: ${(props) => props.width}px;
+    height: ${(props) => props.height}px;
     background-color: #000000;
 `;
 
 const Header = styled.View`
-    height: ${fontSizeLg * 5};
+    height: ${fontSizeLg * 5}px;
     justifyContent: center;
-    margin-bottom: ${70 - fontSizeLg * 5};
+    margin-bottom: ${70 - fontSizeLg * 5}px;
 `;
 
 const Title = styled.Text`
-    font-size: ${fontSizeLg * 3};
+    font-size: ${fontSizeLg * 3}px;
     color: white;
-    margin-left: 30;
+    margin-left: 30px;
 `;
 
 const HeaderButton = styled.View`
     position: absolute;
-    right: 10;
-    width: 200;
-    height: fontSizeLg * 5;
+    right: 10px;
+    width: 200px;
+    height: fontSizeLg * 5px;
     justify-content: center;
 `;
 
 const borderTop = css`
     border-top-color: gray;
-    border-top-width: 1;
+    border-top-width: 1px;
     border-style: solid;
 `;
 
 const borderLeft = css`
     border-left-color: gray;
-    border-left-width: 1;
+    border-left-width: 1px;
     border-style: solid;
 `;
 const borderRight = css`
     border-right-color: gray;
-    border-right-width: 1;
+    border-right-width: 1px;
     border-style: solid;
 `;
 const borderBottom = css`
     border-bottom-color: gray;
-    border-bottom-width: 1;
+    border-bottom-width: 1px;
     border-style: solid;
 `;
 const mainText = css`
@@ -731,9 +716,9 @@ const mainText = css`
 `;
 
 const MonthSelector = styled.View`
-    font-size: ${fontSizeMd};
+    font-size: ${fontSizeMd}px;
     color: white;
-    margin-left: ${step1};
+    margin-left: ${step1}px;
     ${borderLeft}
     ${borderTop}
     ${borderRight}
@@ -743,8 +728,8 @@ const MonthSelector = styled.View`
 const TimeLineBar = styled.View`
     display: flex;
     flex-direction: row;
-    font-size: ${fontSizeSm};
-    margin-left: ${step2};
+    font-size: ${fontSizeSm}px;
+    margin-left: ${step2}px;
     ${borderLeft}
 `;
 
@@ -754,19 +739,19 @@ const MainBoard = styled.View`
 `;
 
 const LeftSidebar = styled.View`
-    width: ${step1}
+    width: ${step1}px
 `;
 
 const MainItem = styled.View`
     display: flex;
     flex-direction: row;
-    width: ${step1};
+    width: ${step1}px;
 `;
 
 const MainItemTitle = styled.View`
     justify-content: center;
-    height: ${fontSizeLg * 1.5}; 
-    width: ${step2};
+    height: ${fontSizeLg * 1.5}px; 
+    width: ${step2}px;
     ${borderTop}
     ${borderLeft}
 `;
@@ -774,7 +759,7 @@ const MainItemTitle = styled.View`
 const BtnGroup = styled.View`
     display: flex;
     flex-direction: row;
-    width: ${step1 - step2};
+    width: ${step1 - step2}px;
     ${borderTop}
 `;
 
@@ -789,20 +774,20 @@ const BtnText = styled.View`
 const SubItem = styled.View`
     display: flex;
     flex-direction: row;
-    width: ${step1};
+    width: ${step1}px;
 `;
 
 const SubItemTitle = styled.View`
     justify-content: center;
-    height: ${fontSizeLg*1.5}; 
-    width: ${step2}; 
-    padding-left: ${paddingLg}; 
+    height: ${fontSizeLg*1.5}px; 
+    width: ${step2}px; 
+    padding-left: ${paddingLg}px; 
     ${borderTop}
     ${borderLeft}
 `;
 
 const DNDBoard = styled.View`
-    width: ${props => props.width - step1};
+    width: ${props => props.width - step1}px;
     overflow: hidden;
     ${borderBottom}
 `;
@@ -810,38 +795,36 @@ const DNDBoard = styled.View`
 const DNDGrid = styled.View`
     position: absolute; 
     background-color: #00000000; 
-    width: ${props => props.width - step1}; 
-    height: 1000;
-    ${borderTop}
-    ${borderRight}
+    width: ${props => props.width - step1}px; 
+    height: 1000px;
 `;
 
 const DNDGridRow = styled.View`
-    width: 10000; 
-    height: ${(props) => props.height}; 
+    width: 10000px; 
+    height: ${(props) => props.height}px; 
     display: flex;
     flexDirection: row;
     ${borderBottom}
 `;
 
 const DNDGRIDCol = styled.View`
-    height: ${props => props.height}; 
-    width: ${props => (props.width - step1) / 10}; 
+    height: ${props => props.height}px; 
+    width: ${props => Math.round((props.width - step1) / 10)}px; 
     ${borderRight}
 `;
 
 const CurrentTimeLine = styled.View`
     position: absolute; 
-    width: 3; 
+    width: 3px; 
     background-color: #00FF00; 
-    height:2000;
-    left: ${props => props.left}
+    height:2000px;
+    left: ${props => props.left}px
 `;
 
 const MainText = styled.Text`
-    font-size: ${props => props.fontSize ? props.fontSize : fontSizeMd};
+    font-size: ${props => props.fontSize ? props.fontSize : fontSizeMd}px;
     color: white;
-    width: ${props => props.width ? props.width : 'auto'};
+    width: ${props => props.width ? `${props.width}px` : 'auto'};
     justify-content: center;
     align-items: ${props => props.pos == 'start' ? 'flex-start' : 'center'};
     
@@ -849,13 +832,13 @@ const MainText = styled.Text`
 
 const MainBtn = styled.Text`
     color: white;
-    border-radius: 5;
-    padding-top: 1; 
-    padding-bottom: 1; 
-    padding-left: ${paddingSm}; 
-    padding-right: ${paddingSm}; 
-    font-size: ${fontSizeSm};
-    borderRadius: 5;
+    border-radius: 5px;
+    padding-top: 1px; 
+    padding-bottom: 1px; 
+    padding-left: ${paddingSm}px; 
+    padding-right: ${paddingSm}px; 
+    font-size: ${fontSizeSm}px;
+    borderRadius: 5px;
     ${borderTop}
     ${borderRight}
     ${borderBottom}
@@ -863,21 +846,22 @@ const MainBtn = styled.Text`
 `;
 
 const BarItem = styled.View`
-    ${borderLeft}
+    ${borderRight}
     
-    width: ${props => props.width ? (props.width - step1) / 10 : '50%'}; 
+    width: ${props => Math.round((props.width - step1) / 10)}px;
+    
     justify-content: center;
     align-items: center;
 `;
 
 const ViewBtn = styled.TouchableOpacity`
-    left: ${props => props.left}
-    top: ${props => props.top}
+    left: ${props => props.left}px
+    top: ${props => props.top}px
     position: absolute;
-    width: 40;
-    height: 40;
-    border-radius: 1000;
-    border-width: 1;
+    width: 40px;
+    height: 40px;
+    border-radius: 1000px;
+    border-width: 1px;
     border-style: solid;
     border-color: gray;
 `;
