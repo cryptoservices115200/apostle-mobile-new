@@ -119,8 +119,12 @@ var chart = {
     ]
   }
 
-let leftTimer = null;
-let righttTimer = null;
+const end = 48;
+let timeStep = []
+for (let i = 0; i < end; i ++) {
+    timeStep.push(i * 0.5)
+}
+
 export default class TaskSchedular extends React.Component {
     constructor(props) {
         super(props);
@@ -194,25 +198,20 @@ export default class TaskSchedular extends React.Component {
                 <MonthSelector>
                     <MainText >AUGUST 10.2021 📆</MainText>
                 </MonthSelector>
-                <TimeLineBar style={{height: 20}}>
-                    <BtnGroup>
-                      <BarItem>
-                        <MainText width={'50%'} >EST TIME</MainText>
-                      </BarItem>
-                      <BarItem>
-                        <MainText width={'50%'} >ACTUAL TIME</MainText>
-                      </BarItem>
-                    </BtnGroup>
-                    {/* <View style={style.dFlex}> */}
-                        {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map((timePoint, id) => (
-                          <BarItem width={width - 2} style={id == 9 ? {borderRightWidth: 1, borderRightColor: 'gray', borderStyle: 'solid'} : {}}>
-                            <MainText style={[{fontWeight: ((width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10) ? 'bold' : 'normal'}]} key={timePoint}>{timePoint} AM</MainText>
-                          </BarItem>
-                        ))}
-                    {/* </View> */}
-                </TimeLineBar>
                 <MainBoard>
                     <LeftSidebar>
+                        <MainItem style={{height: fontSizeLg * 1.5}}>
+                            <MainItemTitle>
+                            </MainItemTitle>
+                            <BtnGroup>
+                                <BtnText>
+                                    <MainText fontSize={fontSizeMd} >EST TIME</MainText>
+                                </BtnText>
+                                <BtnText style={{borderRightWidth: 1, borderRightColor: 'gray', borderRightStyle: 'solid'}}>
+                                    <MainText fontSize={fontSizeMd} >ACTUAL TIME</MainText>
+                                </BtnText>
+                            </BtnGroup>
+                        </MainItem>
                         <MainItem>
                             <MainItemTitle>
                               <MainText fontSize={fontSizeLg} pos={'start'}>🔽Preparation</MainText>
@@ -481,202 +480,196 @@ export default class TaskSchedular extends React.Component {
                         </SubItem>
                     </LeftSidebar>
                     <DNDBoard width={width}>
-                        <DNDGrid width={width}>
+                        <DNDGrid style={{ marginLeft: this.state.hPos,}}>
+                            <DNDGridRow width={width} height={ fontSizeLg * 1.5 - 1 }>
+                            {/* <View style={style.dFlex}> */}
+                                {timeStep.map((timePoint, id) => (
+                                <BarItem width={width - 2} style={id == 9 ? {borderRightWidth: 1, borderRightColor: 'gray', borderStyle: 'solid'} : {}}>
+                                    <MainText style={[{fontWeight: ((width - step1) / 10 * (id + 1) > currentTimePos && ((width - step1) / 10 * (id + 1) - currentTimePos) < (width - step1) / 10) ? 'bold' : 'normal'}]} key={timePoint}>
+                                        {`${Math.floor(timePoint) > 12 ? Math.floor(timePoint) - 12 : Math.floor(timePoint) }:${(timePoint - Math.floor(timePoint)) * 60}`} {Math.floor(timePoint) > 12 ? 'PM' : 'AM'}
+                                    </MainText>
+                                </BarItem>
+                                ))}
+                            {/* </View> */}
+                            </DNDGridRow>
+                        </DNDGrid>
+                        <DNDGrid width={width} style={{marginTop: fontSizeLg * 1.5, marginLeft: this.state.hPos,}}>
                             <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                {timeStep.map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
                             <DNDGridRow width={width} height={fontSizeLg * 4.5}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                {timeStep.map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
                             <DNDGridRow width={width} height={fontSizeLg * 1.5 +1}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                {timeStep.map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
                             <DNDGridRow width={width} height={fontSizeLg * 4.5}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                {timeStep.map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 4.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
                             <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                {timeStep.map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
                             <DNDGridRow width={width} height={fontSizeLg * 9}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                {timeStep.map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 9 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
                             <DNDGridRow width={width} height={fontSizeLg * 1.5 }>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                {timeStep.map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 1.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
                             <DNDGridRow width={width} height={fontSizeLg * 10.5 + 1}>
-                                {['7', '7:30', '8', '8:30', '9', '9:30', '10', '10:30', '11', '11:30'].map(timePoint => (
+                                {timeStep.map(timePoint => (
                                     <DNDGRIDCol width={width} key={timePoint} height={fontSizeLg * 10.5 - 1}></DNDGRIDCol>
                                 ))}
                             </DNDGridRow>
 
                         </DNDGrid>
 
-                        <CurrentTimeLine left={currentTimePos}/>
-                        {/* <ScrollView 
-                            alwaysBounceHorizontal={false} 
-                            style={{width: width - step1, paddingLeft: this.state.scrollMargin}} horizontal={true}> */}
-                            <View style={{position: 'absolute', marginLeft: this.state.hPos, width: width, height: 1000, display: 'flex'}}>
-                                {/* <Moving /> */}
-                                { this.state.barData.map((lane, id) => {
-                                    return (
-                                        <React.Fragment key={lane.id}>
-                                        <DraggableView
-                                            id={lane.id}
-                                            x={lane.x}
-                                            y={lane.y}
-                                            width1={lane.width1}
-                                            width2={lane.width2}
-                                            marginX={lane.marginX}
-                                            color1={lane.color1}
-                                            color2={lane.color2}
-                                            existingData={this.state.barData}
-                                            updateData={(data) => {
-                                                if ((data.x + data.width1) > this.state.scrollWidth) {
-                                                    this.setState({
-                                                        scrollWidth: data.x + data.width1
-                                                    });
-                                                }
-                                                if (data.x < (this.state.scrollMargin * -1)) {
-                                                    console.log(data.x, '<', this.state.scrollMargin);
-                                                    this.setState({
-                                                        scrollMargin: (data.x) * -1
-                                                    });
-                                                }
-                                                let tempBarData = this.state.barData.map(sBarData => {
-                                                    if (sBarData.id == data.id) {
-                                                        return ({
-                                                            ...sBarData,
-                                                            x: data.x,
-                                                            y: data.y
-                                                        })
-                                                    }
+                        <CurrentTimeLine left={currentTimePos} style={{ marginLeft: this.state.hPos,}}/>
+                        
+                        <View style={{position: 'absolute', marginLeft: this.state.hPos, marginTop: fontSizeLg * 1.5, width: width, height: 1000, display: 'flex'}}>
+                            {/* <Moving /> */}
+                            { this.state.barData.map((lane, id) => {
+                                return (
+                                    <React.Fragment key={lane.id}>
+                                    <DraggableView
+                                        id={lane.id}
+                                        x={lane.x}
+                                        y={lane.y}
+                                        width1={lane.width1}
+                                        width2={lane.width2}
+                                        marginX={lane.marginX}
+                                        color1={lane.color1}
+                                        color2={lane.color2}
+                                        existingData={this.state.barData}
+                                        updateData={(data) => {
+                                            if ((data.x + data.width1) > this.state.scrollWidth) {
+                                                this.setState({
+                                                    scrollWidth: data.x + data.width1
+                                                });
+                                            }
+                                            if (data.x < (this.state.scrollMargin * -1)) {
+                                                console.log(data.x, '<', this.state.scrollMargin);
+                                                this.setState({
+                                                    scrollMargin: (data.x) * -1
+                                                });
+                                            }
+                                            let tempBarData = this.state.barData.map(sBarData => {
+                                                if (sBarData.id == data.id) {
                                                     return ({
                                                         ...sBarData,
-                                                        sublanes: sBarData.sublanes.map(sublane => {
-                                                            if (sublane.id == data.id) {
-                                                                return ({
-                                                                    ...sublane,
-                                                                    x: data.x,
-                                                                    y: data.y
-                                                                })
-                                                            }
-                                                            return sublane
-                                                        })
+                                                        x: data.x,
+                                                        y: data.y
                                                     })
-                                                });
-                                                this.setState({
-                                                    barData: tempBarData
-                                                });
-                                            }}
-                                            toggleSliding={(val) => this.setState({sliding: val})}
-                                        />
-                                        {lane.sublanes.map((sublane, iid) => {
-                                            return (
-                                                <DraggableView
-                                                    key={sublane.id}
-                                                    id={sublane.id}
-                                                    x={sublane.x}
-                                                    y={sublane.y}
-                                                    width1={sublane.width1}
-                                                    width2={sublane.width2}
-                                                    marginX={sublane.marginX}
-                                                    color1={sublane.color1}
-                                                    color2={sublane.color2}
-                                                    existingData={this.state.barData}
-                                                    updateData={(data) => {
-                                                        if ((data.x + data.width1) > this.state.scrollWidth) {
-                                                            this.setState({
-                                                                scrollWidth: data.x + data.width1
-                                                            });
+                                                }
+                                                return ({
+                                                    ...sBarData,
+                                                    sublanes: sBarData.sublanes.map(sublane => {
+                                                        if (sublane.id == data.id) {
+                                                            return ({
+                                                                ...sublane,
+                                                                x: data.x,
+                                                                y: data.y
+                                                            })
                                                         }
-                                                        if (data.x < (this.state.scrollMargin * -1)) {
-                                                            console.log(data.x, '<', this.state.scrollMargin);
-                                                            this.setState({
-                                                                scrollMargin: (data.x) * -1
-                                                            });
-                                                        }
-                                                        let tempBarData = this.state.barData.map(sBarData => {
-                                                            if (sBarData.id == data.id) {
-                                                                return ({
-                                                                    ...sBarData,
-                                                                    x: data.x,
-                                                                    y: data.y
-                                                                })
-                                                            }
+                                                        return sublane
+                                                    })
+                                                })
+                                            });
+                                            this.setState({
+                                                barData: tempBarData
+                                            });
+                                        }}
+                                        toggleSliding={(val) => this.setState({sliding: val})}
+                                    />
+                                    {lane.sublanes.map((sublane, iid) => {
+                                        return (
+                                            <DraggableView
+                                                key={sublane.id}
+                                                id={sublane.id}
+                                                x={sublane.x}
+                                                y={sublane.y}
+                                                width1={sublane.width1}
+                                                width2={sublane.width2}
+                                                marginX={sublane.marginX}
+                                                color1={sublane.color1}
+                                                color2={sublane.color2}
+                                                existingData={this.state.barData}
+                                                updateData={(data) => {
+                                                    if ((data.x + data.width1) > this.state.scrollWidth) {
+                                                        this.setState({
+                                                            scrollWidth: data.x + data.width1
+                                                        });
+                                                    }
+                                                    if (data.x < (this.state.scrollMargin * -1)) {
+                                                        console.log(data.x, '<', this.state.scrollMargin);
+                                                        this.setState({
+                                                            scrollMargin: (data.x) * -1
+                                                        });
+                                                    }
+                                                    let tempBarData = this.state.barData.map(sBarData => {
+                                                        if (sBarData.id == data.id) {
                                                             return ({
                                                                 ...sBarData,
-                                                                sublanes: sBarData.sublanes.map(sublane => {
-                                                                    if (sublane.id == data.id) {
-                                                                        return ({
-                                                                            ...sublane,
-                                                                            x: data.x,
-                                                                            y: data.y
-                                                                        })
-                                                                    }
-                                                                    return sublane
-                                                                })
+                                                                x: data.x,
+                                                                y: data.y
+                                                            })
+                                                        }
+                                                        return ({
+                                                            ...sBarData,
+                                                            sublanes: sBarData.sublanes.map(sublane => {
+                                                                if (sublane.id == data.id) {
+                                                                    return ({
+                                                                        ...sublane,
+                                                                        x: data.x,
+                                                                        y: data.y
+                                                                    })
+                                                                }
+                                                                return sublane
                                                             })
                                                         })
-                                                        this.setState({
-                                                            barData: tempBarData
-                                                        });
-                                                    }}
-                                                    toggleSliding={(val) => this.setState({sliding: val})}
-                                                />
-                                            )
-                                        })}
-                                        </React.Fragment>
-                                    )
-                                }) }
-                            </View>
-                        {/* </ScrollView> */}
-                        <Btn 
-                            left={40} 
-                            top={350} 
-                            LEFTBTN={true}
-                            setHPos={(val) => 
-                                this.setState((state) => ({hPos: state.hPos + val}))
-                            }
-                        />
-                        <Btn 
-                            left={width -step1 - 80} 
-                            top={350} 
-                            LEFTBTN={false}
-                            setHPos={(val) => 
-                                this.setState((state) => ({hPos: state.hPos + val}))
-                            }
-                        />
-                        {/* <ViewBtn left={40} top={350} onPress={() => {
-                            this.setState((state) => ({hPos: state.hPos + 10}))
-                        }} 
-                        onLongPress={() => {
-                            if (!leftTimer) {
-                                leftTimer = setInterval(() => {
-                                    this.setState((state) => ({hPos: state.hPos + 10}))
-                                }, 500);
-                            }
-                        }} onPressOut={() => {
-                            if (leftTimer) {
-                                clearInterval(leftTimer)
-                            }
-                        }}>
-                            <Text>{'<'}</Text>
-                        </ViewBtn> */}
+                                                    })
+                                                    this.setState({
+                                                        barData: tempBarData
+                                                    });
+                                                }}
+                                                toggleSliding={(val) => this.setState({sliding: val})}
+                                            />
+                                        )
+                                    })}
+                                    </React.Fragment>
+                                )
+                            }) }
+                        </View>
                     </DNDBoard>
+                    <Btn 
+                        left={40 + step1} 
+                        top={350} 
+                        LEFTBTN={true}
+                        setHPos={(val) => 
+                            this.setState((state) => ({hPos: state.hPos + val}))
+                        }
+                    />
+                    <Btn 
+                        left={width - 80} 
+                        top={350} 
+                        LEFTBTN={false}
+                        setHPos={(val) => 
+                            this.setState((state) => ({hPos: state.hPos + val}))
+                        }
+                    />
                 </MainBoard>
 
             </MainContainer>
@@ -742,6 +735,7 @@ const MonthSelector = styled.View`
     ${borderLeft}
     ${borderTop}
     ${borderRight}
+    ${borderBottom}
 `;
 
 const TimeLineBar = styled.View`
@@ -816,12 +810,12 @@ const DNDGrid = styled.View`
     background-color: #00000000; 
     width: ${props => props.width - step1}; 
     height: 1000;
-    ${borderTop}
+    // ${borderTop}
     ${borderRight}
 `;
 
 const DNDGridRow = styled.View`
-    width: ${props => props.width - step1}; 
+    width: 10000; 
     height: ${(props) => props.height}; 
     display: flex;
     flexDirection: row;
@@ -867,7 +861,6 @@ const MainBtn = styled.Text`
 `;
 
 const BarItem = styled.View`
-    ${borderTop}
     ${borderLeft}
     
     width: ${props => props.width ? (props.width - step1) / 10 : '50%'}; 
