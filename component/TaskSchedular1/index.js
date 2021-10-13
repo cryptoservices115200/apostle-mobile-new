@@ -28,8 +28,8 @@ const borderTop_Temp = {
     borderStyle: 'solid',
     borderTopColor: 'gray'
 }
-
-const currentTimePos = 500
+var today = new Date();
+let currentTimePos = (today.getHours() * 3600 + today.getMinutes() * 60 + today.getSeconds()) /3600
 
 var chart = {
     milestones: [
@@ -144,7 +144,6 @@ export default class TaskSchedular extends React.Component {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
         })
-      console.log(width)
         this.setState({
             scrollWidth: width - step1,
             scrollMargin: 0,
@@ -154,7 +153,7 @@ export default class TaskSchedular extends React.Component {
             yPos ++;
             return ({
                 id: (Math.random() * 10000).toString(),
-                x: (new Date(lane.start) - new Date('2019-06-21T07:00:00.000Z')) / 100000000 / 3.6 * width * 10,
+                x: (new Date(lane.start) - new Date('2019-06-21T00:00:00.000Z')) / 100000000 / 3.6 * width * 10,
                 y: (yPos) * sHeight,
                 marginX: (new Date(lane.startB) - new Date(lane.start)) / 100000000 / 3.6 * width * 10,
                 width1: (new Date(lane.end) - new Date(lane.start)) / 100000000 / 3.6 * width * 10,
@@ -165,7 +164,7 @@ export default class TaskSchedular extends React.Component {
                     yPos ++;
                     return ({
                         id: (Math.random() * 10000).toString(),
-                        x: (new Date(sublane.start) - new Date('2019-06-21T07:00:00.000Z')) / 100000000 / 3.6 * width * 10,
+                        x: (new Date(sublane.start) - new Date('2019-06-21T00:00:00.000Z')) / 100000000 / 3.6 * width * 10,
                         y: (yPos) * sHeight,
                         marginX: (new Date(sublane.startB) - new Date(sublane.start)) / 100000000 / 3.6 * width * 10,
                         width1: (new Date(sublane.end) - new Date(sublane.start)) / 100000000 / 3.6 * width * 10,
@@ -179,7 +178,10 @@ export default class TaskSchedular extends React.Component {
         this.setState({
             barData: temp
         })
-
+        console.log(currentTimePos * (width - step1) / 5)
+        this.setState({
+            hPos: ((currentTimePos) * (width - step1) / 5 * -1 + (width - step1) / 2)
+        })
         
     }
     render() {
@@ -537,7 +539,7 @@ export default class TaskSchedular extends React.Component {
 
                         </DNDGrid>
 
-                        <CurrentTimeLine left={currentTimePos} style={{ marginLeft: this.state.hPos,}}/>
+                        <CurrentTimeLine left={currentTimePos * ((width - step1) / 5)} style={{ marginLeft: this.state.hPos,}}/>
                         
                         <View style={{position: 'absolute', marginLeft: this.state.hPos, marginTop: fontSizeLg * 1.5, width: width, height: 1000, display: 'flex'}}>
                             {/* <Moving /> */}
@@ -810,7 +812,7 @@ const DNDGrid = styled.View`
     background-color: #00000000; 
     width: ${props => props.width - step1}; 
     height: 1000;
-    // ${borderTop}
+    ${borderTop}
     ${borderRight}
 `;
 
