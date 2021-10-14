@@ -264,7 +264,7 @@ const mylog = (data, width) => {
     console.log('==============')
     console.log(data.name)
     console.log('from: ' + toPrettyTime(time_from) + ', to: ' + toPrettyTime(time_to));
-    console.log('from: ' + top_from + ', to: ' + top_to);
+    console.log('from: ' + top_from / sHeight + ', to: ' + top_to / sHeight);
     console.log('==============')
 }
 
