@@ -544,6 +544,7 @@ export default function TaskSchedular () {
                             return (
                                 <React.Fragment key={lane.id}>
                                 <DraggableView
+                                    name={lane.name}
                                     id={lane.id}
                                     x={lane.x}
                                     y={lane.y}
@@ -590,6 +591,7 @@ export default function TaskSchedular () {
                                 {lane.sublanes.map((sublane, iid) => {
                                     return (
                                         <DraggableView
+                                            name={sublane.name}
                                             key={sublane.id}
                                             id={sublane.id}
                                             x={sublane.x}

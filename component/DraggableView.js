@@ -11,7 +11,7 @@ const nearestFloor = (y_height) => {
     return calculated < 0 ? 0 : calculated
 }
 
-const DraggableView = ({id, x, y, width1, width2, color1, color2, marginX, existingData, updateData, toggleSliding}) => {
+const DraggableView = ({name, id, x, y, width1, width2, color1, color2, marginX, existingData, updateData, toggleSliding}) => {
   const pan = useRef(new Animated.ValueXY({x: x, y: y})).current;
   const [startPos, setStartPos] = useState({pan_x0: 0, pan_y0: 0});
   const [pressed, setPressed] = useState(false);
@@ -79,6 +79,7 @@ const DraggableView = ({id, x, y, width1, width2, color1, color2, marginX, exist
                 x: startPos.pan_x0 + gestureState.dx,
                 y: nearestFloor(startPos.pan_y0 + gestureState.dy),
             })
+            console.log(`-------- ${name} lane is Moved -------`)
         } else {
             Animated.spring(
                 pan, // Auto-multiplexed
