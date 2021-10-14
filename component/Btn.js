@@ -29,7 +29,6 @@ const Btn = ({left, top, setHPos, LEFTBTN}) => {
       }}
       onLongPress={() => {
         timer = setInterval(() => {
-          console.log("----")
           setHPos(LEFTBTN ? speed * 2 : -2 * speed)
         }, timestep)
       }}

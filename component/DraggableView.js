@@ -80,18 +80,22 @@ const DraggableView = ({name, id, x, y, width1, width2, color1, color2, marginX,
                 y: nearestFloor(startPos.pan_y0 + gestureState.dy),
             })
             console.log(`-------- ${name} lane is Moved -------`)
+                
+            updateData({
+                id: id,
+                x: startPos.pan_x0 + gestureState.dx,
+                y: nearestFloor(startPos.pan_y0 + gestureState.dy),
+                width1: width1,
+            });
         } else {
+            console.log('failed to update what item due to overlay')
             Animated.spring(
                 pan, // Auto-multiplexed
-                { toValue: { x: startPos.pan_x0, y: startPos.pan_y0 } } // Back to zero
+                { toValue: { x: startPos.pan_x0, y: startPos.pan_y0 },
+                useNativeDriver: true // Add This line
+             } // Back to zero
             ).start();
         }
-        updateData({
-            id: id,
-            x: startPos.pan_x0 + gestureState.dx,
-            y: nearestFloor(startPos.pan_y0 + gestureState.dy),
-            width1: width1,
-        });
         toggleSliding(true);
     },
   });

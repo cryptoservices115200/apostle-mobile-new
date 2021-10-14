@@ -23,10 +23,10 @@ const borderRight_Temp = {
     borderStyle: 'solid',
     borderRightColor: 'gray'
 }
-const borderTop_Temp = {
-    borderTopWidth: 1,
+const borderBottom_Temp = {
+    borderBottomWidth: 1,
     borderStyle: 'solid',
-    borderTopColor: 'gray'
+    borderBottomColor: 'gray'
 }
 var today = new Date();
 let currentTimePos = (today.getHours() * 3600 + today.getMinutes() * 60 + today.getSeconds()) /3600
@@ -51,8 +51,8 @@ var chart = {
         color2: 'rgba(0, 255, 255, 1)',
         sublanes: [{
           name: 'Cut 23g of cabbage',
-          estimatedTime: 90,
-          actualTime: 94,
+          estimatedTime: 10,
+          actualTime: 0,
           start: '2019-06-21T07:04:47.280Z',
           end: '2019-06-21T07:54:47.280Z',
           startB: '2019-06-21T07:04:47.280Z',
@@ -62,8 +62,8 @@ var chart = {
         },
         {
           name: 'Slice 24 onions',
-          estimatedTime: 90,
-          actualTime: 94,
+          estimatedTime: 0,
+          actualTime: -1,
           start: '2019-06-21T07:54:47.280Z',
           end: '2019-06-21T10:04:47.280Z',
           startB: '2019-06-21T07:54:47.280Z',
@@ -72,9 +72,9 @@ var chart = {
           color2: 'rgba(0, 132, 250, 1)',
         },
         {
-          name: 'Slice 24 onions',
-          estimatedTime: 90,
-          actualTime: 94,
+          name: 'Pool 8 potatoes',
+          estimatedTime: 0,
+          actualTime: -1,
           start: '2019-06-21T10:04:47.280Z',
           end: '2019-06-21T10:40:47.280Z',
           startB: '2019-06-21T10:10:47.280Z',
@@ -84,9 +84,9 @@ var chart = {
         }]
       },
       {
-        name: 'Preparation',
-        estimatedTime: 90,
-        actualTime: 94,
+        name: 'Cooking',
+        estimatedTime: -1,
+        actualTime: -1,
         start: '2019-06-21T10:45:47.280Z',
         end: '2019-06-21T12:20:47.280Z',
         startB: '2019-06-21T10:45:00.000Z',
@@ -94,9 +94,9 @@ var chart = {
         color1: 'rgba(12, 9, 249, 0.5)',
         color2: 'rgba(12, 9, 249, 1)',
         sublanes: [{
-          name: 'Cut 23g of cabbage',
-          estimatedTime: 90,
-          actualTime: 94,
+          name: 'Toast burns',
+          estimatedTime: 0,
+          actualTime: -1,
           start: '2019-06-21T10:45:47.280Z',
           end: '2019-06-21T11:00:47.280Z',
           startB: '2019-06-21T10:45:47.280Z',
@@ -105,9 +105,20 @@ var chart = {
           color2: 'rgba(0, 255, 153, 1)',
         },
         {
-          name: 'Slice 24 onions',
-          estimatedTime: 90,
-          actualTime: 94,
+          name: 'Sautee ground beef',
+          estimatedTime: 0,
+          actualTime: -1,
+          start: '2019-06-21T11:04:47.280Z',
+          end: '2019-06-21T11:34:47.280Z',
+          startB: '2019-06-21T11:04:47.280Z',
+          endB: '2019-06-21T11:24:47.280Z',
+          color1: 'rgba(0, 255, 153, 0.5)',
+          color2: 'rgba(0, 255, 153, 1)',
+        },
+        {
+          name: 'Apply onions',
+          estimatedTime: 0,
+          actualTime: -1,
           start: '2019-06-21T11:04:47.280Z',
           end: '2019-06-21T11:34:47.280Z',
           startB: '2019-06-21T11:04:47.280Z',
@@ -115,6 +126,117 @@ var chart = {
           color1: 'rgba(0, 255, 153, 0.5)',
           color2: 'rgba(0, 255, 153, 1)',
         }]
+      },
+      {
+        name: 'Packaging',
+        estimatedTime: -1,
+        actualTime: -1,
+        start: '2019-06-21T10:45:47.280Z',
+        end: '2019-06-21T12:20:47.280Z',
+        startB: '2019-06-21T10:45:00.000Z',
+        endB: '2019-06-21T12:25:47.280Z',
+        color1: 'rgba(12, 9, 249, 0.5)',
+        color2: 'rgba(12, 9, 249, 1)',
+        sublanes: [{
+          name: 'Prepare utensils',
+          estimatedTime: 0,
+          actualTime: -1,
+          start: '2019-06-21T10:45:47.280Z',
+          end: '2019-06-21T11:00:47.280Z',
+          startB: '2019-06-21T10:45:47.280Z',
+          endB: '2019-06-21T11:00:47.280Z',
+          color1: 'rgba(0, 255, 153, 0.5)',
+          color2: 'rgba(0, 255, 153, 1)',
+        },
+        {
+          name: 'Apply Stickers',
+          estimatedTime: 0,
+          actualTime: -1,
+          start: '2019-06-21T11:04:47.280Z',
+          end: '2019-06-21T11:34:47.280Z',
+          startB: '2019-06-21T11:04:47.280Z',
+          endB: '2019-06-21T11:24:47.280Z',
+          color1: 'rgba(0, 255, 153, 0.5)',
+          color2: 'rgba(0, 255, 153, 1)',
+        },
+        {
+          name: 'Package all burgers',
+          estimatedTime: 0,
+          actualTime: -1,
+          start: '2019-06-21T11:04:47.280Z',
+          end: '2019-06-21T11:34:47.280Z',
+          startB: '2019-06-21T11:04:47.280Z',
+          endB: '2019-06-21T11:24:47.280Z',
+          color1: 'rgba(0, 255, 153, 0.5)',
+          color2: 'rgba(0, 255, 153, 1)',
+          sublanes: [
+            {
+              name: 'package all burgers',
+              estimatedTime: 0,
+              actualTime: -1,
+              start: '2019-06-21T11:04:47.280Z',
+              end: '2019-06-21T11:34:47.280Z',
+              startB: '2019-06-21T11:04:47.280Z',
+              endB: '2019-06-21T11:24:47.280Z',
+              color1: 'rgba(0, 255, 153, 0.5)',
+              color2: 'rgba(0, 255, 153, 1)',
+            },
+            {
+              name: 'package all burgers',
+              estimatedTime: 0,
+              actualTime: -1,
+              start: '2019-06-21T11:04:47.280Z',
+              end: '2019-06-21T11:34:47.280Z',
+              startB: '2019-06-21T11:04:47.280Z',
+              endB: '2019-06-21T11:24:47.280Z',
+              color1: 'rgba(0, 255, 153, 0.5)',
+              color2: 'rgba(0, 255, 153, 1)',
+            },
+          ]
+        }]
+      },
+      {
+        name: 'Delievery',
+        estimatedTime: -1,
+        actualTime: -1,
+        start: '2019-06-21T10:45:47.280Z',
+        end: '2019-06-21T12:20:47.280Z',
+        startB: '2019-06-21T10:45:00.000Z',
+        endB: '2019-06-21T12:25:47.280Z',
+        color1: 'rgba(12, 9, 249, 0.5)',
+        color2: 'rgba(12, 9, 249, 1)',
+        sublanes: [{
+            name: 'John Dingers(3)',
+            estimatedTime: 0,
+            actualTime: -1,
+            start: '2019-06-21T10:45:47.280Z',
+            end: '2019-06-21T11:00:47.280Z',
+            startB: '2019-06-21T10:45:47.280Z',
+            endB: '2019-06-21T11:00:47.280Z',
+            color1: 'rgba(0, 255, 153, 0.5)',
+            color2: 'rgba(0, 255, 153, 1)',
+            sublanes: [{
+                name: 'Package all burgers',
+                estimatedTime: 0,
+                actualTime: -1,
+                start: '2019-06-21T10:45:47.280Z',
+                end: '2019-06-21T11:00:47.280Z',
+                startB: '2019-06-21T10:45:47.280Z',
+                endB: '2019-06-21T11:00:47.280Z',
+                color1: 'rgba(0, 255, 153, 0.5)',
+                color2: 'rgba(0, 255, 153, 1)',
+            },{
+                name: 'Package all burgers',
+                estimatedTime: 0,
+                actualTime: -1,
+                start: '2019-06-21T10:45:47.280Z',
+                end: '2019-06-21T11:00:47.280Z',
+                startB: '2019-06-21T10:45:47.280Z',
+                endB: '2019-06-21T11:00:47.280Z',
+                color1: 'rgba(0, 255, 153, 0.5)',
+                color2: 'rgba(0, 255, 153, 1)',
+            },]
+        },]
       }
     ]
   }
@@ -155,6 +277,22 @@ export default function TaskSchedular () {
                 color2: lane.color2,
                 sublanes: lane.sublanes.map((sublane, iid) => {
                     yPos ++;
+                    let sublanes = []
+                    if ('sublanes' in sublane) {
+                        sublanes = sublane.sublanes.map((sublane1, iiid) => {
+                            return ({
+                                name: sublane1.name,
+                                id: (Math.random() * 10000).toString(),
+                                x: (new Date(sublane1.start) - new Date('2019-06-21T00:00:00.000Z')) / 100000000 / 3.6 * width * 10,
+                                y: (yPos) * sHeight,
+                                marginX: (new Date(sublane1.startB) - new Date(sublane1.start)) / 100000000 / 3.6 * width * 10,
+                                width1: (new Date(sublane1.end) - new Date(sublane1.start)) / 100000000 / 3.6 * width * 10,
+                                width2: (new Date(sublane1.endB) - new Date(sublane1.startB)) / 100000000 / 3.6 * width * 10,
+                                color1: sublane1.color1,
+                                color2: sublane1.color2,
+                            })
+                        })
+                    }
                     return ({
                         name: sublane.name,
                         id: (Math.random() * 10000).toString(),
@@ -165,13 +303,45 @@ export default function TaskSchedular () {
                         width2: (new Date(sublane.endB) - new Date(sublane.startB)) / 100000000 / 3.6 * width * 10,
                         color1: sublane.color1,
                         color2: sublane.color2,
+                        sublanes: sublanes
                     })
                 })
             })
         })]
 
         setBarData(temp)
-        console.log(currentTimePos * (width - step1) / 5)
+        let temp1 = [...chart.lanes.map((lane, id) => {
+            yPos ++;
+            return ({
+                name: lane.name,
+                id: lane.name,
+                estimatedTime: lane.estimatedTime,
+                actualTime: lane.actualTime,
+                sublanes: lane.sublanes.map((sublane, iid) => {
+                    yPos ++;
+                    let sublanes = []
+                    if ('sublanes' in sublane) {
+                        sublanes = sublane.sublanes.map((sublane1, iiid) => {
+                            return ({
+                                name: sublane1.name,
+                                id: sublane1.id,
+                                estimatedTime: sublane1.estimatedTime,
+                                actualTime: sublane1.actualTime,
+                            })
+                        })
+                    }
+                    return ({
+                        name: sublane.name,
+                        id: sublane.id,
+                        estimatedTime: sublane.estimatedTime,
+                        actualTime: sublane.actualTime,
+                        sublanes: sublanes,
+                    })
+                })
+            })
+        })]
+        console.log(temp1)
+        setMenuData(temp1)
         setHPos(((currentTimePos) * (width - step1) / 5 * -1 + (width - step1) / 2))
     }, []);
     return (
@@ -187,6 +357,7 @@ export default function TaskSchedular () {
             </MonthSelector>
             <MainBoard>
                 <LeftSidebar>
+
                     <MainItem style={{height: fontSizeLg * 1.5}}>
                         <MainItemTitle>
                         </MainItemTitle>
@@ -194,12 +365,125 @@ export default function TaskSchedular () {
                             <BtnText>
                                 <MainText fontSize={fontSizeMd} >EST TIME</MainText>
                             </BtnText>
-                            <BtnText style={{borderRightWidth: 1, borderRightColor: 'gray', borderRightStyle: 'solid'}}>
+                            <BtnText style={borderRight_Temp}>
                                 <MainText fontSize={fontSizeMd} >ACTUAL TIME</MainText>
                             </BtnText>
                         </BtnGroup>
                     </MainItem>
-                    <MainItem>
+                    {menuData.map((menu, id) => {
+                        return (
+                            <MenuGroup key={id}  style={id == menuData.length - 1 ? borderBottom_Temp : {}}>
+                                <MainItem>
+                                    <MainItemTitle>
+                                    <MainText fontSize={fontSizeLg} pos={'start'}>🔽{menu.name}</MainText>
+                                    </MainItemTitle>
+                                    <BtnGroup>
+                                        {
+                                            menu.estimatedTime == -1 ? <BtnText/> :
+                                            ( menu.estimatedTime == 0 ?                         
+                                                <BtnText>
+                                                    <MainBtn>START</MainBtn>
+                                                </BtnText>
+                                                : 
+                                                <BtnText>
+                                                    <MainText fontSize={fontSizeSm}>{menu.estimatedTime}</MainText>
+                                                </BtnText>
+                                            )
+                                        }
+                                        
+                                        {
+                                            menu.actualTime == -1 ? <BtnText style={borderRight_Temp}/> :
+                                            ( menu.actualTime == 0 ?                         
+                                                <BtnText style={borderRight_Temp}>
+                                                    <MainBtn>END</MainBtn>
+                                                </BtnText>
+                                                : 
+                                                <BtnText style={borderRight_Temp}>
+                                                    <MainText fontSize={fontSizeSm}>{menu.actualTime}</MainText>
+                                                </BtnText>
+                                            )
+                                        }
+                                    </BtnGroup>
+                                </MainItem>
+                                { menu.sublanes.map((sublane, iid) => {
+                                    return (
+                                    <React.Fragment key={iid}>
+                                        <SubItem>
+                                            <SubItemTitle>
+                                                <MainText fontSize={fontSizeSm} pos={'start'}>{sublane.sublanes.length > 0 ? '🔽' : ''}{sublane.name}</MainText>
+                                            </SubItemTitle>
+                                            <BtnGroup>
+                                                {
+                                                    sublane.estimatedTime == -1 ? <BtnText/> :
+                                                    ( sublane.estimatedTime == 0 ?                         
+                                                        <BtnText>
+                                                            <MainBtn>START</MainBtn>
+                                                        </BtnText>
+                                                        : 
+                                                        <BtnText>
+                                                            <MainText fontSize={fontSizeSm}>{sublane.estimatedTime}</MainText>
+                                                        </BtnText>
+                                                    )
+                                                }
+                                                
+                                                {
+                                                    sublane.actualTime == -1 ? <BtnText style={borderRight_Temp}/> :
+                                                    ( sublane.actualTime == 0 ?                         
+                                                        <BtnText style={borderRight_Temp}>
+                                                            <MainBtn>END</MainBtn>
+                                                        </BtnText>
+                                                        : 
+                                                        <BtnText style={borderRight_Temp}>
+                                                            <MainText fontSize={fontSizeSm}>{sublane.actualTime}</MainText>
+                                                        </BtnText>
+                                                    )
+                                                }
+                                            </BtnGroup>
+                                        </SubItem>
+                                        
+                                        { sublane.sublanes.map((sublane1, iiid) => {
+                                            console.log('-----')
+                                            return (
+                                                <SubItem key={iiid}>
+                                                    <SubItemTitle>
+                                                        <MainText fontSize={fontSizeSm} pos={'start'}>{sublane1.name}</MainText>
+                                                    </SubItemTitle>
+                                                    <BtnGroup>
+                                                        {
+                                                            sublane1.estimatedTime == -1 ? <BtnText/> :
+                                                            ( sublane1.estimatedTime == 0 ?                         
+                                                                <BtnText>
+                                                                    <MainBtn>START</MainBtn>
+                                                                </BtnText>
+                                                                : 
+                                                                <BtnText>
+                                                                    <MainText fontSize={fontSizeSm}>{sublane1.estimatedTime}</MainText>
+                                                                </BtnText>
+                                                            )
+                                                        }
+                                                        
+                                                        {
+                                                            sublane1.actualTime == -1 ? <BtnText style={borderRight_Temp}/> :
+                                                            ( sublane1.actualTime == 0 ?                         
+                                                                <BtnText style={borderRight_Temp}>
+                                                                    <MainBtn>END</MainBtn>
+                                                                </BtnText>
+                                                                : 
+                                                                <BtnText style={borderRight_Temp}>
+                                                                    <MainText fontSize={fontSizeSm}>{sublane1.actualTime}</MainText>
+                                                                </BtnText>
+                                                            )
+                                                        }
+                                                    </BtnGroup>
+                                                </SubItem>
+                                            )
+                                        }) }
+                                    </React.Fragment>)
+                                }) }
+                            </MenuGroup>
+                        )
+                    })}
+                    {/* <MainItem>
                         <MainItemTitle>
                           <MainText fontSize={fontSizeLg} pos={'start'}>🔽Preparation</MainText>
                         </MainItemTitle>
@@ -340,7 +624,6 @@ export default function TaskSchedular () {
                             </BtnText>
                         </BtnGroup>
                     </SubItem>
-
                     <SubItem>
                         <SubItemTitle>
                             <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
@@ -396,7 +679,6 @@ export default function TaskSchedular () {
                             </BtnText>
                         </BtnGroup>
                     </SubItem>
-
                     <SubItem>
                         <SubItemTitle>
                             <MainText fontSize={fontSizeSm} pos={'start'}>Package all burgers</MainText>
@@ -464,7 +746,7 @@ export default function TaskSchedular () {
                             <BtnText style={borderRight_Temp}>
                             </BtnText>
                         </BtnGroup>
-                    </SubItem>
+                    </SubItem> */}
                 </LeftSidebar>
                 <DNDBoard width={width}>
                     <DNDGrid width={width} style={{ marginLeft: hPos,}}>
@@ -472,6 +754,7 @@ export default function TaskSchedular () {
                         {/* <View style={style.dFlex}> */}
                             {timeStep.map((timePoint, id) => (
                             <BarItem
+                                key={id}
                               width={width}
                               //style={id == 23 ? {borderRightWidth: 1, borderRightColor: 'gray', borderStyle: 'solid'} : {}}
                             >
@@ -869,4 +1152,7 @@ const ViewBtn = styled.TouchableOpacity`
     border-width: 1px;
     border-style: solid;
     border-color: gray;
+`;
+
+const MenuGroup = styled.View`
 `;
