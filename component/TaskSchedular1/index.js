@@ -247,6 +247,27 @@ for (let i = 0; i < end; i ++) {
     timeStep.push(i * 0.5)
 }
 
+const toPrettyTime = (t_num) => {
+    let hour = Math.floor(t_num)
+    let min = Math.round((t_num - Math.floor(t_num))*60)
+    return `${hour}:${min}`
+}
+
+const mylog = (data) => {
+    
+    let left_from = data.x0;
+    let top_from = data.y0;
+    let left_to = data.x;
+    let top_to = data.y;
+    let time_from = left_from / (width - step1) * 5
+    let time_to = left_to / (width - step1) * 5
+    console.log('==============')
+    console.log(data.name)
+    console.log('from: ' + toPrettyTime(time_from) + ', to: ' + toPrettyTime(time_to));
+    console.log('from: ' + top_from + ', to: ' + top_to);
+    console.log('==============')
+}
+
 export default function TaskSchedular () {
     const [width, setWidth] = useState(1154)
     const [height, setHeight] = useState(1000)
@@ -842,17 +863,7 @@ export default function TaskSchedular () {
                                     existingData={barData}
                                     updateData={(data) => {
                                         // Calculate the offset from left
-                                        let left_from = data.x0;
-                                        let top_from = data.y0;
-                                        let left_to = data.x;
-                                        let top_to = data.y;
-                                        let time_from = left_from / (width - step1) * 5
-                                        let time_to = left_to / (width - step1) * 5
-                                        console.log('============')
-                                        console.log(data.name)
-                                        console.log('from: ' + time_from + ', to: ' + time_to);
-                                        console.log('from: ' + time_from + ', to: ' + time_to);
-                                        console.log('============')
+                                        mylog(data)
                                         // 
                                         if ((data.x + data.width1) > scrollWidth) {
                                           setScrollWidth(data.x + data.width1)
@@ -902,16 +913,7 @@ export default function TaskSchedular () {
                                             color2={sublane.color2}
                                             existingData={barData}
                                             updateData={(data) => {
-                                                let left_from = data.x0;
-                                                let top_from = data.y0;
-                                                let left_to = data.x;
-                                                let top_to = data.y;
-                                                let time_from = left_from / (width - step1) * 5
-                                                let time_to = left_to / (width - step1) * 5
-                                                console.log('============')
-                                                console.log(data.name)
-                                                console.log('from: ' + time_from + ', to: ' + time_to);
-                                                console.log('============')
+                                                mylog(data)
                                                 if ((data.x + data.width1) > scrollWidth) {
                                                     setScrollWidth(data.x + data.width1);
                                                 }
