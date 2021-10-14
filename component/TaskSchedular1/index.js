@@ -841,6 +841,19 @@ export default function TaskSchedular () {
                                     color2={lane.color2}
                                     existingData={barData}
                                     updateData={(data) => {
+                                        // Calculate the offset from left
+                                        let left_from = data.x0;
+                                        let top_from = data.y0;
+                                        let left_to = data.x;
+                                        let top_to = data.y;
+                                        let time_from = left_from / (width - step1) * 5
+                                        let time_to = left_to / (width - step1) * 5
+                                        console.log('============')
+                                        console.log(data.name)
+                                        console.log('from: ' + time_from + ', to: ' + time_to);
+                                        console.log('from: ' + time_from + ', to: ' + time_to);
+                                        console.log('============')
+                                        // 
                                         if ((data.x + data.width1) > scrollWidth) {
                                           setScrollWidth(data.x + data.width1)
                                         }
@@ -889,6 +902,16 @@ export default function TaskSchedular () {
                                             color2={sublane.color2}
                                             existingData={barData}
                                             updateData={(data) => {
+                                                let left_from = data.x0;
+                                                let top_from = data.y0;
+                                                let left_to = data.x;
+                                                let top_to = data.y;
+                                                let time_from = left_from / (width - step1) * 5
+                                                let time_to = left_to / (width - step1) * 5
+                                                console.log('============')
+                                                console.log(data.name)
+                                                console.log('from: ' + time_from + ', to: ' + time_to);
+                                                console.log('============')
                                                 if ((data.x + data.width1) > scrollWidth) {
                                                     setScrollWidth(data.x + data.width1);
                                                 }

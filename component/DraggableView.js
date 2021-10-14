@@ -79,13 +79,19 @@ const DraggableView = ({name, id, x, y, width1, width2, color1, color2, marginX,
                 x: startPos.pan_x0 + gestureState.dx,
                 y: nearestFloor(startPos.pan_y0 + gestureState.dy),
             })
-            console.log(`-------- ${name} lane is Moved -------`)
-                
+            console.log("--------------------------------------------")
+            console.log("Moving Item: " + name)
+            console.log("From: x = " + startPos.pan_x0 + ", y = " + startPos.pan_y0)
+            console.log("To: x = " + startPos.pan_x0 + gestureState.dx + ", y = " + startPos.pan_y0 + gestureState.dy)
+            console.log("--------------------------------------------")
             updateData({
                 id: id,
+                name: name,
                 x: startPos.pan_x0 + gestureState.dx,
                 y: nearestFloor(startPos.pan_y0 + gestureState.dy),
                 width1: width1,
+                x0: startPos.pan_x0,
+                y0: startPos.pan_y0,
             });
         } else {
             console.log('failed to update what item due to overlay')
