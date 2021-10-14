@@ -253,7 +253,7 @@ const toPrettyTime = (t_num) => {
     return `${hour}:${min}`
 }
 
-const mylog = (data) => {
+const mylog = (data, width) => {
     
     let left_from = data.x0;
     let top_from = data.y0;
@@ -863,7 +863,7 @@ export default function TaskSchedular () {
                                     existingData={barData}
                                     updateData={(data) => {
                                         // Calculate the offset from left
-                                        mylog(data)
+                                        mylog(data, width)
                                         // 
                                         if ((data.x + data.width1) > scrollWidth) {
                                           setScrollWidth(data.x + data.width1)
@@ -913,7 +913,7 @@ export default function TaskSchedular () {
                                             color2={sublane.color2}
                                             existingData={barData}
                                             updateData={(data) => {
-                                                mylog(data)
+                                                mylog(data, width)
                                                 if ((data.x + data.width1) > scrollWidth) {
                                                     setScrollWidth(data.x + data.width1);
                                                 }
@@ -956,7 +956,7 @@ export default function TaskSchedular () {
                 </DNDBoard>
                 <Btn
                     left={40 + step1}
-                    top={350}
+                    top={250}
                     LEFTBTN={true}
                     setHPos={(val) =>
                         setHPos((old_one) => old_one + val)
@@ -964,7 +964,7 @@ export default function TaskSchedular () {
                 />
                 <Btn
                     left={width - 80}
-                    top={350}
+                    top={250}
                     LEFTBTN={false}
                     setHPos={(val) =>
                         setHPos((old_one) => old_one + val)
