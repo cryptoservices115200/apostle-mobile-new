@@ -98,7 +98,7 @@ const DraggableView = ({name, id, x, y, width1, width2, color1, color2, marginX,
             Animated.spring(
                 pan, // Auto-multiplexed
                 { toValue: { x: startPos.pan_x0, y: startPos.pan_y0 },
-                useNativeDriver: true // Add This line
+                useNativeDriver: false // Add This line
              } // Back to zero
             ).start();
         }
