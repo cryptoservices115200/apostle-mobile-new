@@ -129,6 +129,7 @@ export default function TaskSchedular () {
     const [width, setWidth] = useState(1154)
     const [height, setHeight] = useState(1000)
     const [barData, setBarData] = useState([])
+    const [menuData, setMenuData] = useState([])
     const [scrollWidth, setScrollWidth] = useState(1154)
     const [scrollMargin, setScrollMargin] = useState(0)
     const [sliding, setSliding] = useState(true)
@@ -143,6 +144,7 @@ export default function TaskSchedular () {
         let temp = [...chart.lanes.map((lane, id) => {
             yPos ++;
             return ({
+                name: lane.name,
                 id: (Math.random() * 10000).toString(),
                 x: (new Date(lane.start) - new Date('2019-06-21T00:00:00.000Z')) / 100000000 / 3.6 * width * 10,
                 y: (yPos) * sHeight,
@@ -154,6 +156,7 @@ export default function TaskSchedular () {
                 sublanes: lane.sublanes.map((sublane, iid) => {
                     yPos ++;
                     return ({
+                        name: sublane.name,
                         id: (Math.random() * 10000).toString(),
                         x: (new Date(sublane.start) - new Date('2019-06-21T00:00:00.000Z')) / 100000000 / 3.6 * width * 10,
                         y: (yPos) * sHeight,
